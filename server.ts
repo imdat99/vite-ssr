@@ -2,7 +2,8 @@ import express, { Express, Request, Response } from "express";
 import * as path from 'node:path';
 import fs from "fs";
 
-// const resolve = (_path: string) => path.resolve(__dirname, _path);
+
+const resolve = (_path: string) => path.resolve(path.resolve(), _path);
 async function configProd(app: Express) {
   app.use(
     (await import("serve-static")).default("./dist/client", {
@@ -20,11 +21,11 @@ async function configProd(app: Express) {
       .filter((fn: string) => fn.includes("main") && fn.endsWith(".js"))[0];
 
   app.use((await import("compression")).default());
-//   app.use(
-//     (await import("serve-static")).default(resolve("./client"), {
-//       index: false,
-//     })
-//   );
+  app.use(
+    (await import("serve-static")).default(resolve("./client"), {
+      index: false,
+    })
+  );
   app.use("*", (req, res) => render(req, res, bootstrap));
   return app;
 }

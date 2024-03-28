@@ -7,8 +7,10 @@
     "dev": "pnpm tsx server",
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
-    "build:server": "vite build --outDir dist/server --ssr ./entry-server.tsx",
-    "preview": "pnpm build && cross-env NODE_ENV=production pnpm tsx server"
+    "build:server1": "vite build --outDir dist/server --ssr ./entry-server.tsx",
+    "build:server": "tsc -p tsconfig.server.json && vite build --ssr ./entry-server.tsx --outDir dist/entry",
+    "preview": "pnpm build && cross-env NODE_ENV=production pnpm tsx server",
+    "serve": "cross-env NODE_ENV=production node dist/app/server.js"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -19,6 +21,7 @@
   "devDependencies": {
     "@types/compression": "^1.7.5",
     "@types/express": "4.17.21",
+    "@types/node": "^20.11.30",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@types/serve-static": "^1.15.5",
