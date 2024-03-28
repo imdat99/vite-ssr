@@ -1,0 +1,35 @@
+{
+  "name": "vite-react-ssr-typescript",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm tsx server",
+    "build": "pnpm build:client && pnpm build:server",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr ./entry-server.tsx",
+    "preview": "pnpm build && cross-env NODE_ENV=production pnpm tsx server"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.4",
+    "react-router-dom": "^6.22.3"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.7.5",
+    "@types/express": "4.17.21",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@types/serve-static": "^1.15.5",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
+    "express": "4.19.2",
+    "serve-static": "^1.15.0",
+    "tsx": "4.7.1",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6",
+    "vite-plugin-css-injected-by-js": "3.5.0"
+  }
+}
