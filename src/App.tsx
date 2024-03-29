@@ -1,39 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { PropsWithChildren } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React + TS + SSR</h1>
-      <Counter />
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
+import { Helmet } from 'react-helmet-async'
+import './App.css'
+const App: React.FC<PropsWithChildren> = ({ children }) => {
+    return (
+        <>
+            <Helmet>
+                <title>Hello World</title>
+                <link rel="canonical" href="https://dat09.fun/" />
+                <meta name="twitter:creator" content={'aaaa'} />
+                <meta name="twitter:card" content={'bbbbb'} />
+                <meta name="twitter:title" content={'cccccc'} />
+            </Helmet>
+            {children}
+        </>
+    )
 }
-
-function Counter() {
-  const [count, setCount] = useState(0);
-  return (
-    <div className="card">
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
-      <p>
-        Edit <code>src/App.tsx</code> and save to test HMR
-      </p>
-    </div>
-  );
-}
-
-export default App;
+export default App

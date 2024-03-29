@@ -8,7 +8,7 @@
     "build": "pnpm build:client && pnpm build:server",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server1": "vite build --outDir dist/server --ssr ./entry-server.tsx",
-    "build:server": "tsc -p tsconfig.server.json && vite build --ssr ./entry-server.tsx --outDir dist/entry",
+    "build:server": "tsc -p tsconfig.server.json && vite build --ssr ./entry-server.tsx --outDir dist/server",
     "preview": "pnpm build && cross-env NODE_ENV=production pnpm tsx server",
     "serve": "cross-env NODE_ENV=production node dist/app/server.js"
   },
@@ -34,5 +34,11 @@
     "typescript": "^5.4.3",
     "vite": "^5.2.6",
     "vite-plugin-css-injected-by-js": "3.5.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true
   }
 }

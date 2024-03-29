@@ -12,13 +12,11 @@ async function configProd(app: Express) {
   );
 
   // @ts-ignore
-  const render = (await import("./dist/server/entry-server.js")).render;
+  const render = (await import("../server/entry-server.js")).render;
   // replace bootstrap script with compiled scripts
-  const bootstrap =
-    "/assets/" +
-    fs
-      .readdirSync("./dist/client/assets")
-      .filter((fn: string) => fn.includes("main") && fn.endsWith(".js"))[0];
+  const files =  fs.readdirSync("./dist/client/assets")
+  const scriptLink = "/assets/" + files.filter((fn: string) => fn.includes("main") && fn.endsWith(".js"))[0];
+  const styleLink = "/assets/" + files.filter((fn: string) => fn.includes("main") && fn.endsWith(".css"))[0];
 
   app.use((await import("compression")).default());
   app.use(
@@ -26,7 +24,7 @@ async function configProd(app: Express) {
       index: false,
     })
   );
-  app.use("*", (req, res) => render(req, res, bootstrap));
+  app.use("*", (req, res) => render(req, res, scriptLink, styleLink));
   return app;
 }
 
