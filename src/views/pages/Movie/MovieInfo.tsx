@@ -10,17 +10,16 @@ interface MovieInfoProps {
 const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
     const na = useNavigate()
     const [showInfo, setShowInfo] = React.useState(false)
-    const handleWatch = () => {
-        if(item.episodes.length && item.episodes[0].server_data.length ) {
-            na({
-                pathname: 'watch',
-                search: createSearchParams({
-                    ep: String(item.episodes[0].server_data.length - 1),
-                    server: '0',
-                }).toString(),
-            }, { replace: true })
+    console.log()
+    const watchLink = React.useMemo(() => {
+        if (item?.episodes.length && item?.episodes[0].server_data.length) {
+            return createSearchParams({
+                ep: String(item.episodes[0].server_data.length - 1),
+                server: '0',
+            }).toString()
         }
-    }
+        return ''
+    }, [item])
     return (
         <div className="md:pt-20 relative">
             <div
@@ -128,16 +127,18 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                             </button>
                         </div>
 
-                        <button
+                        <Link
+                            replace
+                            to={"watch?"+watchLink}
                             // @click="handleWatch"
-                            onClick={handleWatch}
+                            // onClick={handleWatch}
                             className={cn("nes-btn is-error flex mt-5 dark:!border-white", isWatch && 'hidden')}
                             // variant="destructive"
-                            disabled={isWatch}
+                            // disabled={isWatch}
                         >
                             <i className={`nes-icon play size-1x`}></i>
                             <span>&nbsp;Xem phim</span>
-                        </button>
+                        </Link>
                         <button
                             type="button"
                             title="share"

@@ -7,10 +7,10 @@ import { buildImageUrl } from '@/lib/utils'
 
 const CarouselCard: React.FC<HomeCarouselProps> = ({ carouselItems }) => {
     const { api } = useCarousel()
-    const { selectedIndex, scrollSnaps } = useDotButton(api)
+    const { selectedIndex } = useDotButton(api)
     return (
         <>
-            {scrollSnaps.map((_snap, index) => {
+            {carouselItems.map((_snap, index) => {
                 const infoData = carouselItems[index]
                 return index === selectedIndex ? (
                     <div

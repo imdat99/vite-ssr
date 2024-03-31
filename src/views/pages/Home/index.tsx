@@ -46,9 +46,7 @@ const index = () => {
             <TopLoading loading={isLoading} />
             {homeData && (
                 <>
-                    <SafeRender>
-                        <HomeCarousel carouselItems={hotCarousel!} />
-                    </SafeRender>
+                    <HomeCarousel carouselItems={hotCarousel!} />
                     <MovieGrid
                         {...(homeData as Omit<
                             React.ComponentProps<typeof MovieGrid>,
