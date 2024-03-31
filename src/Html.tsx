@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import refreshScript from './refresh-hack.js?raw'
-import { isClient } from './utils/helper'
 
 interface HtmlProps {
     children: ReactNode

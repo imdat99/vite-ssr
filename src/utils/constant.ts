@@ -1,1 +1,0 @@
-const AppName = 'My App'
