@@ -17,7 +17,11 @@ export async function render(
     bootstrap: string,
     style: string
 ) {
-    const { query, dataRoutes } = createStaticHandler(routes)
+    const { query, dataRoutes } = createStaticHandler(routes, {
+        future: {
+            v7_throwAbortReason: true
+        }
+    })
 
     const remixRequest = createFetchRequest(req)
     const context = await query(remixRequest)
@@ -36,6 +40,7 @@ export async function render(
             <HelmetProvider context={helmetContext}>
                 <ErrorBoundary>
                     <StaticRouterProvider
+                        
                         router={router}
                         context={context}
                         nonce="the-nonce"
