@@ -1,4 +1,3 @@
-import { validVideoId } from '@/lib/utils'
 import React from 'react'
 
 interface MovieBackGroundProps {
@@ -11,7 +10,6 @@ const MovieBackGround: React.FC<MovieBackGroundProps> = ({
     videoId,
     isWatch,
 }) => {
-    validVideoId(videoId)
     return (
         <>
             <div className="absolute bg-cover h-full hidden md:block w-7/12 top-0 right-0">

@@ -5,6 +5,7 @@ import { defaultTheme, storageThemeKey } from '@/lib/constants'
 import { Theme } from '@/lib/Types'
 import { cn, getCookie, isClient, setCookie } from '@/lib/utils'
 import SearchInput from './Search'
+import Footer from './Footer'
 
 // const window = <any>(typeof global === 'undefined' ? {
 //     fetch: (url: RequestInfo, init?: RequestInit) =>
@@ -47,7 +48,7 @@ const Layout = () => {
                         <Outlet />
                     </div>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
                 {/* <Popupdetail /> */}
             </div>
         </>

@@ -10,7 +10,8 @@
     "build:server1": "vite build --outDir dist/server --ssr ./entry-server.tsx",
     "build:server": "tsc -p tsconfig.server.json && vite build --ssr ./src/entry-server.tsx --outDir dist/server",
     "preview": "pnpm build && cross-env NODE_ENV=production pnpm tsx server",
-    "serve": "cross-env NODE_ENV=production node dist/app/server.js",
+    "serve:win": "cross-env NODE_ENV=production node dist/app/server.js",
+    "serve": "NODE_ENV=production node dist/app/server.js",
     "clean": "rimraf dist"
   },
   "dependencies": {

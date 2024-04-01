@@ -83,16 +83,6 @@ export function getYoutubeVideoId(url: string = ''): string {
     }
 }
 // export const checkYoutubeId = (id: string = '') => fetch(`http://img.youtube.com/vi/${id}/mqdefault.jpg`).then((res) => res.ok)
-export function validVideoId(id: string) {
-    if (!isClient || !id) return Promise.resolve()
-    const img = new Image();
-    img.src = "http://img.youtube.com/vi/" + id + "/mqdefault.jpg";
-    img.onload = function (this: any) {
-        if (this.width === 120) {
-            alert("Error: Invalid video id"+id);
-        }
-    }
-}
 
 export const parseParams = (querystring: string) => {
     const params = new URLSearchParams(querystring)
