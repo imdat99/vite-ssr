@@ -94,7 +94,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                                     Số tập:&nbsp;{' '}
                                 </span>
                                 <span className="px-1">
-                                    {item?.episode_total || '? Tập'}
+                                    {item?.episode_total || '? Tập'} - {item?.time}
                                 </span>
                             </li>
                             <li
