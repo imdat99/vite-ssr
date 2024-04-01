@@ -8,10 +8,7 @@ interface PageSeoProps {
     children?: React.ReactNode
     seoOnPage: SeoOnPage
 }
-const PageSeo: React.FC<PageSeoProps> = ({
-    children,
-    seoOnPage
-}) => {
+const PageSeo: React.FC<PageSeoProps> = ({ children, seoOnPage }) => {
     const {
         og_type,
         titleHead,
@@ -51,15 +48,14 @@ const PageSeo: React.FC<PageSeoProps> = ({
                         content={'https://dat09.fun' + location.pathname}
                     ></meta>
                     <meta property="og:site_name" content="Dat09Movie" />
-                    {og_image.map((item, idx) => (
-                        <meta
-                            key={idx}
-                            property="og:image"
-                            content={buildImageUrl(item)}
-                        />
-                    ))}
-                    <meta property="og:type" content={og_type || 'website'}></meta>
-                    {}
+                    <meta
+                        property="og:image"
+                        content={buildImageUrl(og_image[0] || '')}
+                    />
+                    <meta
+                        property="og:type"
+                        content={og_type || 'website'}
+                    ></meta>
                 </Helmet>
             )}
             {children}
