@@ -73,12 +73,16 @@ export const scrollToTop = () => {
 
 export function getYoutubeVideoId(url: string = ''): string {
     // Regex pattern to match YouTube video IDs
-    if (!url) return ''
-    const pattern = /(?<=v=)[a-zA-Z0-9_-]+(?=&|\?|$)/;
-    const match = url.match(pattern);
-    if (match) {
-        return match[0];
-    } else {
+    try {
+        const pattern = /(?<=v=)[a-zA-Z0-9_-]+(?=&|\?|$)/;
+        const match = url.match(pattern);
+        if (match) {
+            return match[0];
+        } else {
+            return '';
+        }
+    } catch (error) {
+        console.log("error", error)
         return '';
     }
 }

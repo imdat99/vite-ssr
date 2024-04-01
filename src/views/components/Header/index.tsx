@@ -18,7 +18,7 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme }) => {
         setIsSheetOpen(false)
     }, [location.pathname])
     return (
-        <header className="sticky z-40 top-0 bg-background/80 backdrop-blur-md border-b border-border">
+        <header className="sticky top-0 bg-background/80 backdrop-blur-md border-b z-50 border-border">
             <div className="container flex justify-between h-16 items-center">
                 <div className="md:hidden">
                     <Button
@@ -43,7 +43,9 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme }) => {
                         >
                             <form method="dialog">
                                 <Link to={'/'}>
-                                    <p className="title mb-4 font-bold">Menu</p>
+                                    <p className="title mb-4 font-bold">
+                                    <PageLogo/>
+                                    </p>
                                 </Link>
                                 <div className="lists">
                                     <NavBar

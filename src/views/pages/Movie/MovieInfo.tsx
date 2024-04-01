@@ -33,7 +33,6 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                     />
                 </div>
                 <div className="relative w-full md:w-5/12 bg-transparent">
-                    {item?.trailer_url && getYoutubeVideoId(item?.trailer_url)}
                     <h1 className="font-bold text-xl md:text-3xl mb-2">
                         {item?.name}
                     </h1>
