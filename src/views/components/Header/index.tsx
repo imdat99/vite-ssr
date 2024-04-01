@@ -8,9 +8,10 @@ import PageLogo from './PageLogo'
 
 interface Props {
     onToggletheme: () => void
+    onToggleSearch: () => void
     theme: Theme
 }
-const index: React.FC<Props> = ({ onToggletheme, theme }) => {
+const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme }) => {
     const [isSheetOpen, setIsSheetOpen] = React.useState(false)
     const location = useLocation()
     React.useEffect(() => {
@@ -64,7 +65,7 @@ const index: React.FC<Props> = ({ onToggletheme, theme }) => {
                     />
                 </div>
                 <div className="flex items-center justify-end space-x-4">
-                    <button title="search">
+                    <button title="search" onClick={onToggleSearch}>
                         <i className="nes-icon search size-1x"></i>
                     </button>
                     <div className="flex items-center gap-x-1">

@@ -73,6 +73,7 @@ export const scrollToTop = () => {
 
 export function getYoutubeVideoId(url: string = ''): string {
     // Regex pattern to match YouTube video IDs
+    if (!url) return ''
     const pattern = /(?<=v=)[a-zA-Z0-9_-]+(?=&|\?|$)/;
     const match = url.match(pattern);
     if (match) {
@@ -80,4 +81,38 @@ export function getYoutubeVideoId(url: string = ''): string {
     } else {
         return '';
     }
+}
+// export const checkYoutubeId = (id: string = '') => fetch(`http://img.youtube.com/vi/${id}/mqdefault.jpg`).then((res) => res.ok)
+export function validVideoId(id: string) {
+    if (!isClient || !id) return Promise.resolve()
+    const img = new Image();
+    img.src = "http://img.youtube.com/vi/" + id + "/mqdefault.jpg";
+    img.onload = function (this: any) {
+        if (this.width === 120) {
+            alert("Error: Invalid video id"+id);
+        }
+    }
+}
+
+export const parseParams = (querystring: string) => {
+    const params = new URLSearchParams(querystring)
+    const obj: Record<string, any> = {}
+    for (const key of params.keys()) {
+        if (params.getAll(key).length > 1) {
+            if (params.get(key) !== 'undefined') {
+                obj[key] = params.getAll(key)
+            }
+        } else {
+            if (params.get(key) !== 'undefined') {
+                obj[key] = params.get(key)
+            }
+            if (typeof params.get(key) === 'boolean') {
+                obj[key] = params.get(key)
+            }
+            if (params.get(key) === 'false' || params.get(key) === 'true') {
+                obj[key] = JSON.parse(params.get(key) as any)
+            }
+        }
+    }
+    return obj
 }

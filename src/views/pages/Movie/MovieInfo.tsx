@@ -22,8 +22,8 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
     }, [item])
     return (
         <>
-            <div className="md:pt-20 relative">
-                <MovieBackGround posterUrl={buildImageUrl(item?.poster_url)} videoId={getYoutubeVideoId(item.trailer_url)}/>
+            <div className="md:pt-20 relative overflow-hidden">
+                <MovieBackGround isWatch={isWatch} posterUrl={buildImageUrl(item?.poster_url)} videoId={getYoutubeVideoId(item?.trailer_url)}/>
                 <div className="bg-cover h-full w-full mb-4 sm:absolute sm:max-w-[280px] sm:aspect-2/3 sm:right-28">
                     <img
                         className="w-full shadow-md"
@@ -32,7 +32,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                         loading="lazy"
                     />
                 </div>
-                <div className="w-full md:w-5/12">
+                <div className="relative w-full md:w-5/12 bg-transparent">
                     {item?.trailer_url && getYoutubeVideoId(item?.trailer_url)}
                     <h1 className="font-bold text-xl md:text-3xl mb-2">
                         {item?.name}
@@ -133,7 +133,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                                 </button>
                             </div>
 
-                            <Link
+                            {item?.status !== "trailer"  ? <Link
                                 replace
                                 to={isWatch ? 'https://www.google.com/' :'watch?' + watchLink}
                                 className={cn(
@@ -148,7 +148,16 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                             >
                                 <i className={cn('nes-icon play size-1x', isWatch && 'animate-pulse')}></i>
                                 <span>&nbsp;{isWatch ? 'Đang phát':'Xem phim'}</span>
-                            </Link>
+                            </Link>:(
+                                <button
+                                    type="button"
+                                    title="share"
+                                    className="nes-btn is-warning flex mt-5"
+                                >
+                                    <i className="nes-icon ban" />
+                                    <span>&nbsp;Đang cập nhật</span>
+                                </button>
+                            ) }
                             <button
                                 type="button"
                                 title="share"

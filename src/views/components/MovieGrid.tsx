@@ -10,7 +10,7 @@ interface MovieGridProps {
 const MovieGrid: React.FC<MovieGridProps> = (props) => {
     const { title, items } = props
     return (
-        <section className='mt-20 nes-container dark:!border-white with-title relative !py-6 !px-2 md:!px-6'>
+        <section className='mt-20 nes-container !border-foreground with-title relative !py-6 !px-2 md:!px-6'>
                 {title}
             {/* <div className="flex justify-between mb-2 pb-1 border-border border-b"> */}
             {/* </div> */}

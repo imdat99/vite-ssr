@@ -1075,12 +1075,12 @@ export class Client {
      * @return OK
      */
     v1ApiTimKiem(
-        sort_field: Sort_field | undefined,
-        category: string | undefined,
-        country: string | undefined,
-        year: number | undefined,
-        page: number | undefined,
-        keyword: string | undefined
+        keyword: string | undefined,
+        page?: number,
+        sort_field?: Sort_field,
+        category?: string,
+        country?: string,
+        year?: number,
     ): Promise<SearchKeywordResponseBody> {
         let url_ = this.baseUrl + '/v1/api/tim-kiem?'
         if (sort_field === null)

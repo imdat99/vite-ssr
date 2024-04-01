@@ -26,6 +26,9 @@ dependencies:
   embla-carousel-react:
     specifier: ^8.0.0
     version: 8.0.0(react@18.2.0)
+  hls.js:
+    specifier: 1.5.0-alpha.1.0.canary.9733
+    version: 1.5.0-alpha.1.0.canary.9733
   i18next:
     specifier: ^23.10.1
     version: 23.10.1
@@ -1889,6 +1892,10 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       function-bind: 1.1.2
+
+  /hls.js@1.5.0-alpha.1.0.canary.9733:
+    resolution: {integrity: sha512-ZyJ1PcK4Y46gtV6p6KJVdyazLp5/nRZyXcKcL/2DJy0EnOUL6qakD+RTzOMDOtsUPl/d807AqlQ6sQP8vRTm2Q==}
+    dev: false
 
   /html-parse-stringify@3.0.1:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}

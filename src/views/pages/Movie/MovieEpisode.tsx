@@ -1,5 +1,5 @@
 import { Episode } from '@/lib/client'
-import { cn, scrollToTop } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import React from 'react'
 import { Link, createSearchParams, useLocation } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ const MovieEpisode = React.forwardRef<HTMLDivElement, MovieEpisodeProps>(
         const [open, setOpen] = React.useState(server)
 
         React.useEffect(() => {
-            scrollToTop()
+            setOpen(-1)
         }, [ep, server])
 
         const buildWatchLink = React.useCallback(
@@ -39,7 +39,8 @@ const MovieEpisode = React.forwardRef<HTMLDivElement, MovieEpisodeProps>(
             [episodes, location.pathname, server, ep, isWatch]
         )
 
-        return episodes.length && episodes[0].server_data.length === 1 ? null : (
+        return episodes.length &&
+            episodes[0].server_data.length === 1 ? null : (
             <div ref={ref} className="mt-10">
                 {episodes.map((episode, serverIdx) => (
                     <React.Fragment key={serverIdx}>
@@ -54,13 +55,17 @@ const MovieEpisode = React.forwardRef<HTMLDivElement, MovieEpisodeProps>(
                                 }
                             >
                                 <p className="flex">
-                                    {serverIdx === server && isWatch && <i className="nes-icon play animate-pulse"></i>}
-                                    <i
-                                            className='nes-icon folder'
-                                        ></i>
+                                    {serverIdx === server && isWatch && (
+                                        <i className="nes-icon play animate-pulse"></i>
+                                    )}
+                                    <i className="nes-icon folder"></i>
                                     <span>
                                         &nbsp;
-                                        {episode.server_name}{!isNaN(ep) && isWatch && ' / Tập: ' + episode.server_data[ep].name}
+                                        {episode.server_name}
+                                        {!isNaN(ep) &&
+                                            isWatch &&
+                                            ' / Tập: ' +
+                                                episode.server_data[ep]?.name}
                                     </span>
                                 </p>
                                 <i
@@ -83,7 +88,8 @@ const MovieEpisode = React.forwardRef<HTMLDivElement, MovieEpisodeProps>(
                                         title={server.name}
                                         className={cn(
                                             'nes-btn min-w-28 flex mx-2 my-2 is-primary',
-                                            isWatch&& index === ep &&
+                                            isWatch &&
+                                                index === ep &&
                                                 '!cursor-not-allowed is-error !bg-green-600/80 after:!shadow-md after:!shadow-green-100'
                                         )}
                                         key={index}

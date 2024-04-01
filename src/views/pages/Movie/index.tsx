@@ -27,7 +27,7 @@ const Movie = () => {
         [type, ep, server]
     )
     React.useEffect(() => {
-        console.log('isWatch', isWatch)
+        // console.log('isWatch', isWatch)
         if (!isWatch) {
             na('/movie/' + slug, { replace: true })
         }

@@ -9,10 +9,6 @@ interface NavBarProps {
 }
 const menuList = [
     {
-        title: 'Phim Hot',
-        path: '/top',
-    },
-    {
         title: 'Phim Lẻ',
         path: '/category/movie',
     },
