@@ -1,70 +1,190 @@
-:root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+/* latin */
+@font-face {
+    font-family: 'Fernando';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./assets/font.ttf') format('truetype');
+}
+/* latin */
+@font-face {
+    font-family: 'Determination';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./assets/font.woff') format('woff');
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+@layer base {
+    :root {
+        --bg: #ffffff;
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
 
+        --card: 0 0% 100%;
+        --card-foreground: 240 10% 3.9%;
+
+        --popover: 0 0% 100%;
+        --popover-foreground: 240 10% 3.9%;
+
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+
+        --accent: 240 4.8% 95.9%;
+        --accent-foreground: 240 5.9% 10%;
+
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+        --ring: 240 10% 3.9%;
+
+        --radius: 0.5rem;
+    }
+
+    .dark {
+        --bg: #262626;
+        /* --background: 240 10% 3.9%; */
+        --background: 0 0% 15%;
+        --background-a: 0 0% 15% 5%;
+        --foreground: 0 0% 98%;
+
+        --card: 240 10% 3.9%;
+        --card-foreground: 0 0% 98%;
+
+        --popover: 240 10% 3.9%;
+        --popover-foreground: 0 0% 98%;
+
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+
+        /* --secondary: 240 3.7% 15.9%; */
+        --secondary: 45 0% 27.8%;
+        --secondary-foreground: 0 0% 98%;
+
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+
+        --accent: 240 3.7% 15.9%;
+        --accent-foreground: 0 0% 98%;
+
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+        --ring: 240 4.9% 83.9%;
+    }
+}
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    font-family: 'Fernando', sans-serif !important;
 }
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.app-nes {
+    font-family: 'Press Start 2P', monospace !important;
 }
-
+a {
+    text-decoration: none !important;
+}
+a,
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+    cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC)
+            14 0,
+        pointer !important;
 }
-button:hover {
-  border-color: #646cff;
+a:focus,
+button:focus {
+    outline: none;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.scroll-btn {
+    position: fixed;
+    bottom: -60px;
+    right: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
 }
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.scroll-btn > span {
+    display: block;
+    transform: rotateZ(90deg);
+}
+.scroll-btn.active {
+    bottom: 25px;
+}
+.kirby-info {
+    position: fixed;
+    top: 100px;
+    right: -280px;
+    z-index: 999;
+    display: flex;
+    height: 100px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.kirby-info.active {
+    right: 10px;
+}
+* {
+    border-image-repeat: unset !important;
+}
+.progress {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: -6px;
+    width: 1%;
+    height: 3px;
+    background-color: #ce0000;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    -moz-transition: width 600ms ease-out, opacity 500ms linear;
+    -ms-transition: width 600ms ease-out, opacity 500ms linear;
+    -o-transition: width 600ms ease-out, opacity 500ms linear;
+    -webkit-transition: width 600ms ease-out, opacity 500ms linear;
+    transition: width 1000ms ease-out, opacity 500ms linear;
+}
+.progress b,
+.progress i {
+    position: absolute;
+    top: 0;
+    height: 3px;
+    -moz-box-shadow: #777777 1px 0 6px 1px;
+    -ms-box-shadow: #777777 1px 0 6px 1px;
+    -webkit-box-shadow: #777777 1px 0 6px 1px;
+    box-shadow: #777777 1px 0 6px 1px;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+.progress b {
+    clip: rect(-6px, 22px, 14px, 10px);
+    opacity: 0.6;
+    width: 20px;
+    right: 0;
+}
+.progress i {
+    clip: rect(-6px, 90px, 14px, -6px);
+    opacity: 0.6;
+    width: 180px;
+    right: -80px;
 }

@@ -27,7 +27,7 @@
     "include": [
       "api/**/*",
       "types/*",
-      "server.ts"
+      "src/server.ts"
     ],
     "exclude": [
       "dist",
