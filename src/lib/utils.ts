@@ -28,7 +28,7 @@ export const class2Object = <T>(classConvert: T) => {
     return object as T
 }
 export const repairUrl = (url: string) => url.replace(/\/\//g, '/').replace('http:/', 'http://').replace('https:/', 'https://')
-export const buildImageUrl = (path: string) => {
+export const buildImageUrl = (path: string = '') => {
     const isInclude = path.includes('uploads/movies')
     const tempUrl = isInclude ? [APP_DOMAIN_CDN_IMAGE, path].join('/') : [APP_DOMAIN_CDN_IMAGE, 'uploads/movies', path].join('/')
     return repairUrl(tempUrl)
@@ -61,7 +61,23 @@ export function getCookie(name: string): string {
     return "";
 }
 
-// Example usage
-// setCookie("username", "John", 30); // Set a cookie named "username" with value "John" expiring in 30 days
-// const username = getCookie("username"); // Get the value of the "username" cookie
-// console.log(username); // Output: John
+export const scrollToTop = () => {
+    if (!isClient) return
+    const scrollStep = -window.scrollY / (500 / 25),
+        scrollInterval = setInterval(function () {
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep)
+            } else clearInterval(scrollInterval)
+        }, 15)
+}
+
+export function getYoutubeVideoId(url: string = ''): string {
+    // Regex pattern to match YouTube video IDs
+    const pattern = /(?<=v=)[a-zA-Z0-9_-]+(?=&|\?|$)/;
+    const match = url.match(pattern);
+    if (match) {
+        return match[0];
+    } else {
+        return '';
+    }
+}

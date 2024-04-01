@@ -13,7 +13,7 @@ import Loading from '@/views/components/Loading'
 import MovieGrid from '@/views/components/MovieGrid'
 import HomeCarousel from './HomeCarousel'
 import SafeRender from '@/views/components/SafeRender'
-import HomeScroll from './HomeScroll'
+import HomeScroll from '../../components/HomeScroll'
 import TopLoading from '@/views/components/TopLoading'
 
 const fetcher = ([key, page]: [string, number]) =>

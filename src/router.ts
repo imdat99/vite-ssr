@@ -5,6 +5,7 @@ import { unstable_serialize as infinite_unstable_serialize } from 'swr/infinite'
 import client from './lib/client'
 import { isClient } from './lib/utils'
 import Layout from './views/components/Layout'
+import Error from './views/pages/Error'
 
 /**
  * never use lazy loading in the root route,
@@ -14,7 +15,7 @@ const routes: RouteObject[] = [
     {
         path: '/',
         element: _c(Layout),
-        errorElement: _c('div', {}, 'Error'),
+        errorElement: _c(Error),
         children: [
             {
                 index: true,
@@ -44,7 +45,6 @@ const routes: RouteObject[] = [
                 path: 'movie/:slug/:type?',
                 loader: async ({params}): Promise<SWRConfiguration> => {
                     if (isClient) {
-                        console.log(params)
                         return {}
                     }
                     return {
@@ -56,7 +56,7 @@ const routes: RouteObject[] = [
                 lazy: async () => ({
                     Component: (await import('./views/pages/Movie')).default,
                 }),
-            },
+            }
         ],
     },
 ]
