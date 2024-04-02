@@ -25,10 +25,10 @@ const HomeScroll: React.FC<HomeScrollProps> = ({info}) => {
     return (
         <div className="app-nes">
             {info&&<a
-                href="https://github.com/nostalgic-css/NES.css"
+                href="/"
                 target="_blank"
                 rel="noopener"
-                className={cn('kirby-info', kirbyRef.current)}
+                className={cn('kirby-info !hidden md:flex', kirbyRef.current)}
             >
                 <p className="nes-balloon from-right py-1 px-2 text-xs h-fit">
                     {info || 'Hello!'}

@@ -1,5 +1,5 @@
 import path from "path"
-import { defineConfig } from 'vite'
+import { UserConfig, defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
@@ -20,7 +20,7 @@ export default defineConfig(({ command }) => {
     return devConfig
 })
 
-const devConfig = {
+const devConfig: UserConfig = {
     plugins: [
         react(),
         // cssInjectedByJsPlugin()
@@ -35,7 +35,14 @@ const devConfig = {
             input: './src/main.tsx',
             output: {
                 manualChunks: undefined,
+                // entryFileNames: `assets/[hash].js`,
+                chunkFileNames: `assets/[hash].js`,
+                // assetFileNames: `assets/[name].[ext]`
+                // assetFileNames: `assets/[hash].[ext]`
             },
+
         },
+        chunkSizeWarningLimit: 512,
+        target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     },
 }

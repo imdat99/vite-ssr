@@ -220,5 +220,5 @@ button:focus {
     background-color: var(--background);
 }
 header {
-    z-index: 1000!important;
+    z-index: 99!important;
 }

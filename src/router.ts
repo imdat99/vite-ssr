@@ -7,6 +7,7 @@ import { isClient } from './lib/utils'
 import Layout from './views/components/Layout'
 import Error from './views/pages/Error'
 import { searchRegex } from './lib/constants'
+import { ErrorBoundary } from './views/components/Errorboundary'
 
 /**
  * never use lazy loading in the root route,
@@ -16,7 +17,7 @@ const routes: RouteObject[] = [
     {
         path: '/',
         element: _c(Layout),
-        // errorElement: _c(Error),
+        ErrorBoundary: Error,
         children: [
             {
                 index: true,

@@ -18,24 +18,19 @@ async function configProd(app: Express) {
     const render = (await import('../server/entry-server.js')).render
     // replace bootstrap script with compiled scripts
     const files = fs.readdirSync('./dist/client/assets')
-    const scriptLink =
-        '/assets/' +
-        files.filter(
-            (fn: string) => fn.includes('main') && fn.endsWith('.js')
-        )[0]
     const styleLink =
         '/assets/' +
         files.filter(
             (fn: string) => fn.includes('main') && fn.endsWith('.css')
         )[0]
-
+    const listScript = files.filter((fn: string) => fn.endsWith('.js')).map((fn: string) => "/assets/" + fn)
     app.use((await import('compression')).default())
     app.use(
         (await import('serve-static')).default(resolve('./client'), {
             index: false,
         })
     )
-    app.use('*', (req, res) => render(req, res, scriptLink, styleLink))
+    app.use('*', (req, res) => render(req, res, styleLink, listScript))
     return app
 }
 
