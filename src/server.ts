@@ -55,7 +55,7 @@ async function configDev(app: Express) {
         try {
             const render = (await vite.ssrLoadModule('./src/entry-server.tsx'))
                 .render
-            render(req, res, `/src/main.tsx`, '')
+            render(req, res, '', [`/src/main.tsx`])
         } catch (err) {
             const e = err as Error
             vite.ssrFixStacktrace(e)

@@ -29,7 +29,6 @@ export async function render(
     if (context instanceof Response) {
         throw context
     }
-
     const router = createStaticRouter(dataRoutes, context)
     const helmetContext: { helmet: HelmetServerState } = { helmet: {} as any }
 
@@ -54,7 +53,8 @@ export async function render(
                 res.setHeader('content-type', 'text/html')
                 // <link rel="manifest" href="/manifest.json" />
                 const header =
-                    `<!DOCTYPE html><html lang="en" class="${cookies[storageThemeKey]}"><head><meta charset="utf-8" /><link rel="icon" href="/favicon.ico" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#000000" /><meta name="application-name" content="MOVIE DAT09" /><meta name="author" content="Dat09.fun" /><link rel="apple-touch-icon" href="/favicon.ico" /><link rel="shortcut icon" href="/vite.svg" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="preload" href="${style}" as="style"/><link rel="stylesheet" href="${style}" />` + listScript.map(script => `<link rel="preload" href="${script}" as="script" />`).join('') +
+                    `<!DOCTYPE html><html lang="en" class="${cookies[storageThemeKey]}"><head><meta charset="utf-8" /><link rel="icon" href="/favicon.ico" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#000000" /><meta name="application-name" content="MOVIE DAT09" /><meta name="author" content="Dat09.fun" /><link rel="apple-touch-icon" href="/favicon.ico" /><link rel="shortcut icon" href="/vite.svg" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="preload" href="${style}" as="style"/><link rel="stylesheet" href="${style}" />` +
+                     listScript.map(script => `<link rel="preload" href="${script}" as="script" />`).join('') +
                         Object.values(helmetContext.helmet)
                         .map((value) => value.toString())
                         .filter(Boolean)
