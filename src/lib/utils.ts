@@ -38,7 +38,9 @@ export const repairUrl = (url: string) => {
 export const buildImageUrl = (path: string = '') => {
     const isInclude = path.includes('uploads/movies')
     const tempUrl = isInclude ? [APP_DOMAIN_CDN_IMAGE, path].join('/') : [APP_DOMAIN_CDN_IMAGE, 'uploads/movies', path].join('/')
-    const nameSet = new Set(tempUrl.split('/'))
+    let urlSplit = [...tempUrl.split('/')]
+    urlSplit[urlSplit.length - 1] = encodeURIComponent(urlSplit[urlSplit.length - 1]!)
+    const nameSet = new Set(urlSplit)
     return repairUrl(Array.from(nameSet).join('/'))
 }
 // Function to set a cookie
