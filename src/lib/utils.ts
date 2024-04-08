@@ -27,11 +27,19 @@ export const class2Object = <T>(classConvert: T) => {
     }, {})
     return object as T
 }
-export const repairUrl = (url: string) => url.replace(/\/\//g, '/').replace('http:/', 'http://').replace('https:/', 'https://')
+export const repairUrl = (url: string) => {
+    if (!url.includes('http')) {
+        url = `http://${url}`
+    }
+    return url.replace(/\/\//g, '/')
+            .replace('http:/', 'http://')
+            .replace('https:/', 'https://')
+}
 export const buildImageUrl = (path: string = '') => {
     const isInclude = path.includes('uploads/movies')
     const tempUrl = isInclude ? [APP_DOMAIN_CDN_IMAGE, path].join('/') : [APP_DOMAIN_CDN_IMAGE, 'uploads/movies', path].join('/')
-    return repairUrl(tempUrl)
+    const nameSet = new Set(tempUrl.split('/'))
+    return repairUrl(Array.from(nameSet).join('/'))
 }
 // Function to set a cookie
 export function setCookie(name: string, value: string, days: number = 365) {
@@ -88,8 +96,8 @@ export function getYoutubeVideoId(url: string = ''): string {
 }
 // export const checkYoutubeId = (id: string = '') => fetch(`http://img.youtube.com/vi/${id}/mqdefault.jpg`).then((res) => res.ok)
 
-export const parseParams = (querystring: string) => {
-    const params = new URLSearchParams(querystring)
+export const parseParams = (requestUrl: string) => {
+    const params = new URL(requestUrl).searchParams
     const obj: Record<string, any> = {}
     for (const key of params.keys()) {
         if (params.getAll(key).length > 1) {

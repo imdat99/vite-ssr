@@ -1,0 +1,12 @@
+{
+    "Common": {
+        "Language": "Language",
+        "English": "English",
+        "Vietnamese": "Vietnamese",
+        "Theme": "Theme"
+    },
+    "Movie": {
+        "List": "Movie List",
+        "Watch": "Watch"
+    }
+}

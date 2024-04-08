@@ -23,14 +23,24 @@ async function configProd(app: Express) {
         files.filter(
             (fn: string) => fn.includes('main') && fn.endsWith('.css')
         )[0]
-    const listScript = files.filter((fn: string) => fn.endsWith('.js')).map((fn: string) => "/assets/" + fn)
+    const listScript = files
+        .filter((fn: string) => fn.endsWith('.js'))
+        .map((fn: string) => '/assets/' + fn)
     app.use((await import('compression')).default())
     app.use(
         (await import('serve-static')).default(resolve('./client'), {
             index: false,
         })
     )
-    app.use('*', (req, res) => render(req, res, styleLink, listScript))
+    app.use('*', (req, res) => {
+        try {
+            render(req, res, styleLink, listScript)
+        } catch (err) {
+            const e = err as Error
+            console.log(e.stack)
+            res.status(500).end(e.stack)
+        }
+    })
     return app
 }
 
@@ -75,13 +85,13 @@ i18next
     .use(FileSystemBackend)
     .init({
         backend: {
-            loadPath: resolve('./locales/{{lng}}-{{ns}}.json'),
+            loadPath: resolve('./locates/{{lng}}-{{ns}}.json'),
         },
         detection: {
             order: ['header'],
             caches: ['cookie'],
         },
-        fallbackLng: 'en',
+        fallbackLng: 'vi',
         preload: ['en', 'vi'],
         saveMissing: true,
     })

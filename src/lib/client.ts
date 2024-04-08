@@ -433,10 +433,14 @@ export class Client {
             fetch(url: RequestInfo, init?: RequestInit): Promise<Response>
         }
     ) {
-        const window = <any>(typeof global === 'undefined' ? {
-            fetch: (url: RequestInfo, init?: RequestInit) =>
-                import('isomorphic-fetch').then((m) => m.default(url, init)),
-        } : global)
+        const window = <any>(typeof global === 'undefined'
+            ? {
+                  fetch: (url: RequestInfo, init?: RequestInit) =>
+                      import('isomorphic-fetch').then((m) =>
+                          m.default(url, init)
+                      ),
+              }
+            : global)
         this.http = http ? http : window
         this.baseUrl = baseUrl ?? 'http://{{domain_api}}'
     }
@@ -672,46 +676,61 @@ export class Client {
      * @param category (optional) category
      * @param country (optional) country
      * @param year (optional) year
-     * @param page (optional) 
+     * @param page (optional)
      * @return OK
      */
-    v1ApiDanhSach(slug: Slug, page: number | undefined, sort_field?: Sort_field, category?: string, country?: string, year?: number): Promise<ListMoviesResponse> {
-        let url_ = this.baseUrl + "/v1/api/danh-sach/{slug}?";
+    v1ApiDanhSach(
+        slug: Slug,
+        page: number | undefined,
+        params?: {
+            sort_field: Sort_field
+            category: string
+            country: string
+            year: number
+        } | undefined
+    ): Promise<ListMoviesResponse> {
+        const {
+            sort_field,
+            category,
+            country,
+            year,
+        } = params || {}
+        let url_ = this.baseUrl + '/v1/api/danh-sach/{slug}?'
         if (slug === undefined || slug === null)
-            throw new Error("The parameter 'slug' must be defined.");
-        url_ = url_.replace("{slug}", encodeURIComponent("" + slug));
+            throw new Error("The parameter 'slug' must be defined.")
+        url_ = url_.replace('{slug}', encodeURIComponent('' + slug))
         if (sort_field === null)
-            throw new Error("The parameter 'sort_field' cannot be null.");
+            throw new Error("The parameter 'sort_field' cannot be null.")
         else if (sort_field !== undefined)
-            url_ += "sort_field=" + encodeURIComponent("" + sort_field) + "&";
+            url_ += 'sort_field=' + encodeURIComponent('' + sort_field) + '&'
         if (category === null)
-            throw new Error("The parameter 'category' cannot be null.");
+            throw new Error("The parameter 'category' cannot be null.")
         else if (category !== undefined)
-            url_ += "category=" + encodeURIComponent("" + category) + "&";
+            url_ += 'category=' + encodeURIComponent('' + category) + '&'
         if (country === null)
-            throw new Error("The parameter 'country' cannot be null.");
+            throw new Error("The parameter 'country' cannot be null.")
         else if (country !== undefined)
-            url_ += "country=" + encodeURIComponent("" + country) + "&";
+            url_ += 'country=' + encodeURIComponent('' + country) + '&'
         if (year === null)
-            throw new Error("The parameter 'year' cannot be null.");
+            throw new Error("The parameter 'year' cannot be null.")
         else if (year !== undefined)
-            url_ += "year=" + encodeURIComponent("" + year) + "&";
+            url_ += 'year=' + encodeURIComponent('' + year) + '&'
         if (page === null)
-            throw new Error("The parameter 'page' cannot be null.");
+            throw new Error("The parameter 'page' cannot be null.")
         else if (page !== undefined)
-            url_ += "page=" + encodeURIComponent("" + page) + "&";
-        url_ = url_.replace(/[?&]$/, "");
+            url_ += 'page=' + encodeURIComponent('' + page) + '&'
+        url_ = url_.replace(/[?&]$/, '')
 
         let options_: RequestInit = {
-            method: "GET",
+            method: 'GET',
             headers: {
-                "Accept": "application/json"
-            }
-        };
+                Accept: 'application/json',
+            },
+        }
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processV1ApiDanhSach(_response);
-        });
+            return this.processV1ApiDanhSach(_response)
+        })
     }
 
     protected processV1ApiDanhSach(response: Response): Promise<any> {
@@ -1080,7 +1099,7 @@ export class Client {
         sort_field?: Sort_field,
         category?: string,
         country?: string,
-        year?: number,
+        year?: number
     ): Promise<SearchKeywordResponseBody> {
         let url_ = this.baseUrl + '/v1/api/tim-kiem?'
         if (sort_field === null)

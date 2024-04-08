@@ -9,6 +9,7 @@ const SearchInput = React.forwardRef<
     }
 >(({ className, selectedClassName, dotClassName, hidden, ...props }, ref) => {
     const na = useNavigate()
+    // const lo = useLocation()
     const [search, setSearch] = React.useState('' as string)
 
     React.useEffect(() => {
@@ -17,16 +18,24 @@ const SearchInput = React.forwardRef<
         }
     }, [hidden])
     return (
-        <div className={"search-input relative w-full animate-[fadeIn] ease-linear duration-200 my-4 hidden -top-24"}>
+        <div
+            className={
+                'search-input relative w-full animate-[fadeIn] ease-linear duration-200 my-4 hidden -top-24'
+            }
+        >
             <div className="nes-field">
                 <label htmlFor="name_field">Tìm kiếm</label>
                 <input
+                    value={search}
                     type="text"
                     id="name_field"
                     className="nes-input text-base !border-foreground"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            na({ pathname: '/tim-kiem', search: `?keyword=${search}`})
+                            na({
+                                pathname: '/tim-kiem',
+                                search: `?keyword=${search}`,
+                            })
                         }
                     }}
                     onChange={(e) => setSearch(e.target.value)}

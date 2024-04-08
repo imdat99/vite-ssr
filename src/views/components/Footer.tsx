@@ -7,7 +7,7 @@ const Footer = () => {
     <span
       className="font-black text-2xl animate-pulse duration-1000 text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-violet-500"
     >
-      Để Xem Đã
+      XemĐĩ.Fun
     </span>
     <p className="font-bold text-foreground/60">
       Trang xem phim chất lượng thấp =))

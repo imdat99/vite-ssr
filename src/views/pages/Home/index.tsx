@@ -3,7 +3,12 @@ import { unstable_serialize } from 'swr'
 import reactLogo from '../../../assets/react.svg'
 import Counter from './Counter'
 import { Helmet } from 'react-helmet-async'
-import { Link, useAsyncValue, useLoaderData } from 'react-router-dom'
+import {
+    Link,
+    useAsyncValue,
+    useLoaderData,
+    useNavigate,
+} from 'react-router-dom'
 import SwrConfigHOC from '@/lib/Hoc/SwrConfigHOC'
 import useSWRInfinite from 'swr/infinite'
 import client, { HomeGetResponseBody, Slug } from '@/lib/client'
@@ -15,6 +20,7 @@ import HomeCarousel from './HomeCarousel'
 import SafeRender from '@/views/components/SafeRender'
 import HomeScroll from '../../components/HomeScroll'
 import TopLoading from '@/views/components/TopLoading'
+import InfinityScroll from '@/views/components/InfinityScroll'
 
 const fetcher = ([key, page]: [string, number]) =>
     (page
@@ -22,6 +28,7 @@ const fetcher = ([key, page]: [string, number]) =>
         : client.v1ApiHome(undefined)) as Promise<HomeGetResponseBody>
 
 const index = () => {
+    const na = useNavigate()
     const { data, size, setSize, isLoading } = useSWRInfinite(
         (index) => ['/home', index],
         fetcher,
@@ -78,6 +85,11 @@ const index = () => {
                         Total: {homeData?.params?.pagination.totalItems}
                     </>
                 }
+            />
+            <InfinityScroll
+                onLoadMore={() => {
+                    na('/category', {replace: true})
+                }}
             />
         </PageSeo>
     )

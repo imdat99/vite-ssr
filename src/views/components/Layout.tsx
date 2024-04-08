@@ -1,5 +1,10 @@
 import React from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import {
+    NavLink,
+    Outlet,
+    ScrollRestoration,
+    useLocation,
+} from 'react-router-dom'
 import Header from './Header'
 import { defaultTheme, storageThemeKey } from '@/lib/constants'
 import { Theme } from '@/lib/Types'
@@ -40,12 +45,31 @@ const Layout = () => {
 
     return (
         <>
-            <div className={cn("flex min-h-screen flex-col bg-background", toggleSearch && "search")}>
-                <Header onToggletheme={handleToggletheme} onToggleSearch={handleToggleSearch} theme={theme} />
+            <div
+                className={cn(
+                    'flex min-h-screen flex-col bg-background',
+                    toggleSearch && 'search'
+                )}
+            >
+                <Header
+                    onToggletheme={handleToggletheme}
+                    onToggleSearch={handleToggleSearch}
+                    theme={theme}
+                />
                 <div className="flex-1">
                     <div className="max-w-[1400px] mx-auto px-4 md:px-8 bg-repeat bg-contain">
-                        <SearchInput hidden={!toggleSearch}/>
+                        <SearchInput hidden={!toggleSearch} />
                         <Outlet />
+                        <ScrollRestoration
+                            getKey={(location, matches) => {
+                                const paths = ['/category']
+                                return paths.includes(location.pathname)
+                                    ? 
+                                      location.pathname
+                                    : 
+                                      location.key
+                            }}
+                        />
                     </div>
                 </div>
                 <Footer />
