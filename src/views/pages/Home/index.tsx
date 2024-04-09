@@ -61,13 +61,12 @@ const index = () => {
                         >)}
                         title={
                             <>
-                                <h3 className="title md:text-2xl !-mt-11 text-xl font-semibold uppercase !bg-background">
+                                <h3 className="md:text-2xl text-xl font-semibold uppercase">
                                     Phim mới cập nhật
                                 </h3>
-                                <p className="mb-11">&nbsp;</p>
                                 <Link
-                                    to="/"
-                                    className="absolute top-4 right-4 font-medium text-foreground/60 hover:text-foreground/80 self-end"
+                                    to="/list"
+                                    className="font-medium text-foreground/60 hover:text-foreground/80 self-end"
                                 >
                                     Xem tất cả
                                 </Link>
@@ -85,11 +84,6 @@ const index = () => {
                         Total: {homeData?.params?.pagination.totalItems}
                     </>
                 }
-            />
-            <InfinityScroll
-                onLoadMore={() => {
-                    na('/category', {replace: true})
-                }}
             />
         </PageSeo>
     )

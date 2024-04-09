@@ -62,7 +62,7 @@ const Layout = () => {
                         <Outlet />
                         <ScrollRestoration
                             getKey={(location, matches) => {
-                                const paths = ['/category']
+                                const paths = ['/list']
                                 return paths.includes(location.pathname)
                                     ? 
                                       location.pathname

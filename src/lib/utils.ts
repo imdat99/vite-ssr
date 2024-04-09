@@ -120,3 +120,26 @@ export const parseParams = (requestUrl: string) => {
     }
     return obj
 }
+
+export function throttle(func: Function, timeFrame: number) {
+    var lastTime = 0;
+    return function (this: any) {
+        var now = Date.now();
+        if (now - lastTime >= timeFrame) {
+            func.apply(this, arguments);
+            lastTime = now;
+        }
+    };
+  }
+
+export function secondsToHHMMSS(totalSeconds: number): string {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    const hh = hours < 10 ? "0" + hours : hours.toString();
+    const mm = minutes < 10 ? "0" + minutes : minutes.toString();
+    const ss = seconds < 10 ? "0" + seconds : seconds.toString();
+
+    return `${hh}:${mm}:${ss}`;
+}

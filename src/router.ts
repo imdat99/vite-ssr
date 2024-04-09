@@ -66,21 +66,19 @@ const routes: RouteObject[] = [
                 },
             },
             {
-                path: 'category/:slug?',
+                path: 'list',
                 lazy: async () => ({
                     Component: (await import('./views/pages/Category')).default,
                 }),
-                loader: async ({ params, request }): Promise<SWRConfiguration>=> {
+                loader: async ({ request }): Promise<SWRConfiguration>=> {
                     if (isClient) return {}
-                    const slug = params.slug;
-                    console.log("slug", slug)
                     const searchParams = parseParams(request.url)
                     return {
                         fallback: {
                             [infinite_unstable_serialize(() => [
-                                slug || Slug.PhimMoi,
-                                1,
-                            ])]: [await client.v1ApiDanhSach(slug as Slug || Slug.PhimMoi, searchParams.page || 1, searchParams as any)],
+                                searchParams.slug || Slug.PhimMoi,
+                                1, JSON.stringify(searchParams),
+                            ])]: [await client.v1ApiDanhSach(searchParams.slug as Slug || Slug.PhimMoi, searchParams.page || 1, searchParams as any)],
                         },
                     }
                 },

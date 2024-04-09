@@ -12,10 +12,10 @@ const MovieGrid: React.FC<MovieGridProps> = (props) => {
     const { title, items } = props
     const imgBlock = useLazyImg(items)
     return (
-        <section className={cn('mt-20 !border-foreground with-title relative !py-6 !px-2 md:!px-6', title && 'nes-container')}>
+        <section className='mt-20 !border-foreground with-title relative !py-6 !px-2'>
+            <div className="flex justify-between mb-2 pb-3 border-border border-b">
                 {title}
-            {/* <div className="flex justify-between mb-2 pb-1 border-border border-b"> */}
-            {/* </div> */}
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5" ref={imgBlock}>
                 {items.map((item) => (
                     <Link

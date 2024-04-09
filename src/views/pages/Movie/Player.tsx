@@ -1,20 +1,51 @@
 import React, { useEffect, useRef } from 'react'
 import Artplayer from 'artplayer'
 import Hls, { HlsConfig } from 'hls.js'
-import { scrollToTop } from '@/lib/utils'
+import { scrollToTop, secondsToHHMMSS, throttle } from '@/lib/utils'
+import { storageTimeKey } from '@/lib/constants'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/views/components/ui/alert-dialog'
 
 interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
     getInstance?: (instance: Artplayer) => void
-    option: Omit<Artplayer['option'], 'container' | 'customType'>
+    option: Omit<Artplayer['option'], 'container' | 'customType'> & {
+        _id: string
+        name: string
+    }
 }
 const Player = React.forwardRef<HTMLDivElement, PlayerProps>(
     ({ className, option, getInstance, ...props }, ref) => {
-        const artRef = useRef<HTMLDivElement>(null)
-
+        const timer = useRef<number | null>(null)
+        const playerRef = useRef<HTMLDivElement>(null)
+        const artRef = useRef<Artplayer>()
+        const [open, setOpen] = React.useState<number>(0)
+        const writeTime = throttle(
+            React.useCallback(() => {
+                if(!artRef.current!.playing) return
+                const prevStorage = localStorage.getItem(storageTimeKey)
+                const currentTime = (artRef.current!.currentTime / artRef.current!.duration)*100 > 95 ? 0 :artRef.current!.currentTime
+                localStorage.setItem(
+                    storageTimeKey,
+                    JSON.stringify({
+                        ...JSON.parse(prevStorage || ''),
+                        [option._id]: currentTime,
+                    })
+                )
+            }, [option.url]),
+            5000
+        )
         useEffect(() => {
-            const art = new Artplayer({
+            artRef.current = new Artplayer({
                 ...option,
-                container: artRef.current!,
+                container: playerRef.current!,
                 autoOrientation: true,
                 subtitleOffset: false,
                 customType: {
@@ -54,20 +85,49 @@ const Player = React.forwardRef<HTMLDivElement, PlayerProps>(
             })
 
             if (getInstance && typeof getInstance === 'function') {
-                getInstance(art)
+                getInstance(artRef.current)
             }
-                art.on('ready', () => {
-                    scrollToTop()
-                })
-
+             artRef.current.on('ready', () => {
+                scrollToTop()
+                const prevStorage = JSON.parse(localStorage.getItem(storageTimeKey)||'{}')
+                if(prevStorage[option._id] &&  artRef.current){
+                     artRef.current.pause()
+                    setOpen(prevStorage[option._id])
+                }
+            })
+             artRef.current.on('video:timeupdate', writeTime)
             return () => {
-                if (art && art.destroy) {
-                    art.destroy(false)
+                if ( artRef.current &&  artRef.current.destroy) {
+                     artRef.current.destroy(false)
                 }
             }
         }, [option.url])
 
-        return <div ref={artRef} className={className} />
+        return (
+            <>
+                <AlertDialog open={Boolean(open)} onOpenChange={() => setOpen(0)}>
+                    {/* <AlertDialogTrigger>Open</AlertDialogTrigger> */}
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                Tiếp tục xem?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Tiếp tục xem phim <br/><b>{option.name}</b> tại: <b>{secondsToHHMMSS(open)}</b>
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Thôi</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => {
+                                 artRef.current!.seek = open;
+                                    artRef.current!.play()
+                            }}>Oke luôn</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+                <div ref={playerRef} className={className} />
+            </>
+        )
     }
 )
 Player.displayName = 'Player'

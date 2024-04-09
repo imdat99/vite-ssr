@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import React from 'react'
 import "nes.css/css/nes.min.css";
 import "nes.icons/css/nes-icons.min.css";
 import './index.css'

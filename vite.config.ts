@@ -9,7 +9,10 @@ export default defineConfig(({ command }) => {
         return {
             ...devConfig,
             ssr: {
-                noExternal: ['react-helmet-async'],
+                optimizeDeps: {
+                    include: ["lodash"]
+                  },
+                noExternal: ['react-helmet-async', 'lodash'],
                 // Add your external dependencies here for the SSR build, otherwise,
                 // the bundled won't have enough libraries to render noExternal:
                 // [/@\w+\/*/],

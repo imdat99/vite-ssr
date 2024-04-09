@@ -16,6 +16,8 @@ const MovieWatch = React.forwardRef<HTMLDivElement, MovieWatchProps>(
             <div className={cn('aspect-video w-full', className)}>
                 <Player
                     option={{
+                        _id: [itemData._id,ep,server].join('-'),
+                        name: [itemData.name, itemData.episodes[server].server_data[ep].name].join(' - '),
                         url: repairUrl(
                             itemData.episodes[server].server_data[ep].link_m3u8
                         ),
@@ -29,10 +31,31 @@ const MovieWatch = React.forwardRef<HTMLDivElement, MovieWatchProps>(
                         fastForward: true,
                         theme: '#E03131',
                         poster: buildImageUrl(itemData?.poster_url),
+                        controls: [
+                            {
+                                name: 'button1',
+                                index: 10,
+                                position: 'right',
+                                html: '<img width="24" heigth="24" src="/next.svg">',
+                                tooltip: 'Tiến 10s',
+                                click: function () {
+                                    this.forward = 10
+                                },
+                            },
+                            {
+                                name: 'button2',
+                                index: 10,
+                                position: 'right',
+                                html: '<img width="24" heigth="24" src="/prev.svg">',
+                                tooltip: 'Lùi 10s',
+                                click: function () {
+                                    this.backward = 10
+                                },
+                            },
+                        ]
                     }}
                     className="w-full h-full player"
                 />
-                <div></div>
             </div>
         )
     }
