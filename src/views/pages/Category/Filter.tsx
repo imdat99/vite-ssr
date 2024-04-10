@@ -1,4 +1,7 @@
-import React from 'react'
+import ClientRender from '@/lib/Hoc/ClientRender'
+import useParseParams from '@/lib/Hooks/useParseParams'
+import client, { Categories, sortFields } from '@/lib/client'
+import { Button } from '@/views/components/ui/button'
 import {
     Select,
     SelectContent,
@@ -6,11 +9,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/views/components/ui/select'
-import ClientRender from '@/lib/Hoc/ClientRender'
+import { useLocation, useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
-import client, { Categories, sortFields } from '@/lib/client'
-import { useSearchParams } from 'react-router-dom'
-import useParseParams from '@/lib/Hooks/useParseParams'
 
 const fetcher = () =>
     Promise.all([
@@ -47,20 +47,26 @@ const fetcher = () =>
 
 const Filter = () => {
     const { data } = useSWR('filter', fetcher)
-    const [,setSearchValue] = useSearchParams()
+    const na = useNavigate();
     const serchParams = useParseParams()
+    
     return (
         <div className="mt-10 -mb-20 grid grid-cols-1 md:grid-cols-4 gap-5">
             {data?.map(({ title, items, name }, index) => (
                 <div key={index}>
                     <p className="text-foreground mb-5">{title}</p>
                     <Select name={name} value={serchParams[name] || '-1'} onValueChange={(e) => {
+                        let search = '';
                         if (e === '-1') {
                             const { [name!]: _, ...rest } = serchParams
-                            setSearchValue(rest as any)
-                            return
+                            search = new URLSearchParams(rest as any).toString()
+                        } else {
+                            search = new URLSearchParams({ ...serchParams as any, [name!]: e }).toString()
                         }
-                        setSearchValue({...serchParams as any, [name!]: e})
+                        na('/', {replace: true, state: {
+                            from: 'category',
+                            search,
+                        }})
                     }}>
                         <SelectTrigger className="w-full border-foreground/30" style={{
                                 lineHeight: '2rem',
@@ -78,6 +84,10 @@ const Filter = () => {
                     </Select>
                 </div>
             ))}
+            {Object.keys(serchParams).length ?
+            <Button title="clear">
+                Clear
+            </Button> : null}
         </div>
     )
 }

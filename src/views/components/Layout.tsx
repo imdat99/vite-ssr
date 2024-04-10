@@ -11,6 +11,7 @@ import { Theme } from '@/lib/Types'
 import { cn, getCookie, isClient, setCookie } from '@/lib/utils'
 import SearchInput from './Search'
 import Footer from './Footer'
+import ListenFilter from './ListenFilter'
 
 // const window = <any>(typeof global === 'undefined' ? {
 //     fetch: (url: RequestInfo, init?: RequestInit) =>
@@ -62,7 +63,7 @@ const Layout = () => {
                         <Outlet />
                         <ScrollRestoration
                             getKey={(location, matches) => {
-                                const paths = ['/list']
+                                const paths = ['/category']
                                 return paths.includes(location.pathname)
                                     ? 
                                       location.pathname

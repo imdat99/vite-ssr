@@ -65,7 +65,7 @@ const index = () => {
                                     Phim mới cập nhật
                                 </h3>
                                 <Link
-                                    to="/list"
+                                    to="/category"
                                     className="font-medium text-foreground/60 hover:text-foreground/80 self-end"
                                 >
                                     Xem tất cả

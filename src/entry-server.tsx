@@ -72,7 +72,14 @@ export function createFetchRequest(req: ex.Request): Request {
     const url = new URL(req.originalUrl || req.url, origin)
 
     const controller = new AbortController()
-    req.on('close', () => controller.abort())
+    req.on('close', () => {
+        try {
+            console.log("close")
+            controller.abort()
+        } catch (error) {
+            console.error(error)
+        }
+    })
 
     const headers = new Headers()
 

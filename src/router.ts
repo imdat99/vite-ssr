@@ -66,7 +66,7 @@ const routes: RouteObject[] = [
                 },
             },
             {
-                path: 'list',
+                path: 'category',
                 lazy: async () => ({
                     Component: (await import('./views/pages/Category')).default,
                 }),

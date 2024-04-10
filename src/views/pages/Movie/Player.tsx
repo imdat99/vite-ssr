@@ -1,8 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import Artplayer from 'artplayer'
-import Hls, { HlsConfig } from 'hls.js'
-import { scrollToTop, secondsToHHMMSS, throttle } from '@/lib/utils'
 import { storageTimeKey } from '@/lib/constants'
+import { scrollToTop, secondsToHHMMSS, throttle } from '@/lib/utils'
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,6 +10,9 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/views/components/ui/alert-dialog'
+import Artplayer from 'artplayer'
+import Hls, { HlsConfig } from 'hls.js'
+import React, { useEffect, useRef } from 'react'
 
 interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
     getInstance?: (instance: Artplayer) => void
@@ -23,7 +23,6 @@ interface PlayerProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 const Player = React.forwardRef<HTMLDivElement, PlayerProps>(
     ({ className, option, getInstance, ...props }, ref) => {
-        const timer = useRef<number | null>(null)
         const playerRef = useRef<HTMLDivElement>(null)
         const artRef = useRef<Artplayer>()
         const [open, setOpen] = React.useState<number>(0)
@@ -35,7 +34,7 @@ const Player = React.forwardRef<HTMLDivElement, PlayerProps>(
                 localStorage.setItem(
                     storageTimeKey,
                     JSON.stringify({
-                        ...JSON.parse(prevStorage || ''),
+                        ...JSON.parse(prevStorage || '{}'),
                         [option._id]: currentTime,
                     })
                 )

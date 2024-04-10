@@ -10,7 +10,7 @@ interface NavBarProps {
 const menuList = [
     {
         title: 'Movie.List',
-        path: '/list',
+        path: '/category',
     },
 ]
 const NavBar: React.FC<NavBarProps> = (props) => {
