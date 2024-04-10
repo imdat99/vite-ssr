@@ -1,0 +1,12 @@
+{
+    "Common": {
+        "Language": "Ngôn ngữ",
+        "Vietnamese": "Tiếng Việt",
+        "English": "Tiếng Anh",
+        "Theme": "Chủ đề"
+    },
+    "Movie": {
+        "List": "Danh sách",
+        "Watched": "Xem phim"
+    }
+}

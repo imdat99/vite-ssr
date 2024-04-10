@@ -10,6 +10,8 @@ import MovieInfo from './MovieInfo'
 import Related from './Related'
 import { isEp, epNumber } from '@/lib/utils'
 import MovieWatch from './MovieWatch'
+import HomeScroll from '@/views/components/HomeScroll'
+import MovieEpisode from './MovieEpisode'
 
 const Movie = () => {
     const na = useNavigate()
@@ -17,6 +19,7 @@ const Movie = () => {
     const { ep, server } = useParseParams<'ep' | 'server'>()
     const { data, isLoading } = useSWR(slug || 'slug', client.v1ApiPhim, {
         revalidateIfStale: false,
+        revalidateOnFocus: false,
     })
     const cacheData = React.useRef<MoviesSlugResponseBody['data']>({} as any)
     const isWatch = React.useMemo(
@@ -24,7 +27,7 @@ const Movie = () => {
         [type, ep, server]
     )
     React.useEffect(() => {
-        console.log("isWatch", isWatch)
+        // console.log('isWatch', isWatch)
         if (!isWatch) {
             na('/movie/' + slug, { replace: true })
         }
@@ -41,17 +44,25 @@ const Movie = () => {
             <TopLoading loading={isLoading} />
             {isWatch && (
                 <MovieWatch
-                itemData={item!}
+                    itemData={item!}
+                    ep={epNumber(ep)}
+                    server={epNumber(server)}
+                    className='my-5 bg-slate-400'
+                />
+            )}
+            <MovieInfo itemData={item!} isWatch={isWatch} />
+            <MovieEpisode
+                episodes={item?.episodes || []}
                 ep={epNumber(ep)}
                 server={epNumber(server)}
-                />
-                )}
-                <MovieInfo itemData={item!} isWatch={isWatch}/>
+                isWatch={isWatch}
+            />
             <Related
                 itemCategory={item?.category[0]!}
                 itemCountry={item?.country[0]!}
                 itemId={item?._id!}
             />
+            <HomeScroll />
         </PageSeo>
     )
 }

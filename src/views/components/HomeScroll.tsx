@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn, scrollToTop } from '@/lib/utils'
 import React from 'react'
 
 interface HomeScrollProps {
@@ -22,33 +22,23 @@ const HomeScroll: React.FC<HomeScrollProps> = ({info}) => {
         }
     }, [])
 
-    // this function scrolls to the top of the page smooly
-    const scrollToTop = () => {
-        const scrollStep = -window.scrollY / (500 / 25),
-            scrollInterval = setInterval(function () {
-                if (window.scrollY !== 0) {
-                    window.scrollBy(0, scrollStep)
-                } else clearInterval(scrollInterval)
-            }, 15)
-    }
-
     return (
         <div className="app-nes">
-            <a
-                href="https://github.com/nostalgic-css/NES.css"
+            {info&&<a
+                href="/"
                 target="_blank"
                 rel="noopener"
-                className={cn('kirby-info', kirbyRef.current)}
+                className={cn('kirby-info !hidden sm:!flex', kirbyRef.current)}
             >
                 <p className="nes-balloon from-right py-1 px-2 text-xs h-fit">
                     {info || 'Hello!'}
                 </p>
                 <i className="nes-kirby"></i>
-            </a>
+            </a>}
             <button
                 type="button"
                 className={cn(
-                    'nes-btn is-primary scroll-btn !p-1 z-50',
+                    'nes-btn is-warning scroll-btn !p-1 z-50',
                     navRef.current
                 )}
                 onClick={scrollToTop}

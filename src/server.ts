@@ -18,24 +18,29 @@ async function configProd(app: Express) {
     const render = (await import('../server/entry-server.js')).render
     // replace bootstrap script with compiled scripts
     const files = fs.readdirSync('./dist/client/assets')
-    const scriptLink =
-        '/assets/' +
-        files.filter(
-            (fn: string) => fn.includes('main') && fn.endsWith('.js')
-        )[0]
     const styleLink =
         '/assets/' +
         files.filter(
             (fn: string) => fn.includes('main') && fn.endsWith('.css')
         )[0]
-
+    const listScript = files
+        .filter((fn: string) => fn.endsWith('.js'))
+        .map((fn: string) => '/assets/' + fn)
     app.use((await import('compression')).default())
     app.use(
         (await import('serve-static')).default(resolve('./client'), {
             index: false,
         })
     )
-    app.use('*', (req, res) => render(req, res, scriptLink, styleLink))
+    app.use('*', (req, res) => {
+        try {
+            render(req, res, styleLink, listScript)
+        } catch (err) {
+            const e = err as Error
+            console.log(e.stack)
+            res.status(500).end(e.stack)
+        }
+    })
     return app
 }
 
@@ -60,7 +65,7 @@ async function configDev(app: Express) {
         try {
             const render = (await vite.ssrLoadModule('./src/entry-server.tsx'))
                 .render
-            render(req, res, `/src/main.tsx`, '')
+            render(req, res, '', [`/src/main.tsx`])
         } catch (err) {
             const e = err as Error
             vite.ssrFixStacktrace(e)
@@ -80,13 +85,13 @@ i18next
     .use(FileSystemBackend)
     .init({
         backend: {
-            loadPath: resolve('./locales/{{lng}}-{{ns}}.json'),
+            loadPath: resolve('./locates/{{lng}}-{{ns}}.json'),
         },
         detection: {
             order: ['header'],
             caches: ['cookie'],
         },
-        fallbackLng: 'en',
+        fallbackLng: 'vi',
         preload: ['en', 'vi'],
         saveMissing: true,
     })

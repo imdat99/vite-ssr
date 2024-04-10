@@ -9,20 +9,8 @@ interface NavBarProps {
 }
 const menuList = [
     {
-        title: 'Phim Hot',
-        path: '/top',
-    },
-    {
-        title: 'Phim Lẻ',
-        path: '/category/movie',
-    },
-    {
-        title: 'Phim Bộ',
-        path: '/category/show',
-    },
-    {
-        title: 'Phim Mới',
-        path: '/about',
+        title: 'Movie.List',
+        path: '/list',
     },
 ]
 const NavBar: React.FC<NavBarProps> = (props) => {
