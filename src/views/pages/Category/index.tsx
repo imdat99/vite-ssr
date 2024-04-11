@@ -14,11 +14,15 @@ import useSWR from 'swr'
 
 const Category = () => {
     const searchParams = useParseParams()
-    const { slug, page, ...other } = searchParams;
+    const { slug, page, ...other } = searchParams
     const { data, isLoading } = useSWR(
-        [slug || Slug.PhimMoi, JSON.stringify(searchParams)],
+        slug || JSON.stringify(searchParams),
         ([pageSlug]) =>
-            client.v1ApiDanhSach(pageSlug as Slug, Number(page || 1) , other as any),
+            client.v1ApiDanhSach(
+                (pageSlug as Slug) || Slug.PhimMoi,
+                Number(page || 1),
+                other as any
+            ),
         {
             revalidateFirstPage: false,
             revalidateIfStale: false,
@@ -28,11 +32,11 @@ const Category = () => {
     const pagiData = React.useMemo(() => data?.data?.params.pagination, [data])
     return (
         <PageSeo {...(data?.data as React.ComponentProps<typeof PageSeo>)}>
-            <Filter breadCrumb={data?.data.breadCrumb}/>
+            <Filter breadCrumb={data?.data.breadCrumb} />
             <MovieGrid items={data?.data?.items || []} />
             {isLoading && <Loading />}
-            {pagiData && <Pagi pagiData={pagiData}/>}
-            <HomeScroll/>
+            {pagiData && <Pagi pagiData={pagiData} />}
+            <HomeScroll />
         </PageSeo>
     )
 }

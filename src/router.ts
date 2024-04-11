@@ -73,10 +73,7 @@ const routes: RouteObject[] = [
                     const searchParams = parseParams(request.url)
                     return {
                         fallback: {
-                            [infinite_unstable_serialize(() => [
-                                searchParams.slug || Slug.PhimMoi,
-                                1, JSON.stringify(searchParams),
-                            ])]: [await client.v1ApiDanhSach(searchParams.slug as Slug || Slug.PhimMoi, searchParams.page || 1, searchParams as any)],
+                            [searchParams?.slug || JSON.stringify(searchParams)]: await client.v1ApiDanhSach(searchParams.slug as Slug || Slug.PhimMoi, searchParams.page || 1, searchParams as any),
                         },
                     }
                 },
