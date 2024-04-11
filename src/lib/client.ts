@@ -598,8 +598,9 @@ export class Client {
      * @param page (optional)
      * @return OK
      */
-    v1ApiHome(page: number | undefined): Promise<HomeGetResponseBody> {
+    v1ApiHome(): Promise<HomeGetResponseBody> {
         let url_ = this.baseUrl + '/v1/api/home?'
+        const page = undefined;
         if (page === null)
             throw new Error("The parameter 'page' cannot be null.")
         else if (page !== undefined)

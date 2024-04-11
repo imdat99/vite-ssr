@@ -9,7 +9,7 @@ interface NavBarProps {
 }
 const menuList = [
     {
-        title: 'Movie.List',
+        title: 'Danh sách',
         path: '/category',
     },
 ]

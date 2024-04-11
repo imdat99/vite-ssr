@@ -9,41 +9,30 @@ import PageSeo from '@/views/components/PageSeo'
 import React from 'react'
 import useSWRInfinite from 'swr/infinite'
 import Filter from './Filter'
+import Pagi from './Pagi'
+import useSWR from 'swr'
 
 const Category = () => {
     const searchParams = useParseParams()
-    const { slug } = searchParams;
-    const { data, size, setSize, isLoading } = useSWRInfinite(
-        (index) => [slug || Slug.PhimMoi, index + 1, JSON.stringify(searchParams)],
-        ([pageSlug, index]) =>
-            client.v1ApiDanhSach(pageSlug as Slug, index, searchParams as any),
+    const { slug, page, ...other } = searchParams;
+    const { data, isLoading } = useSWR(
+        [slug || Slug.PhimMoi, JSON.stringify(searchParams)],
+        ([pageSlug]) =>
+            client.v1ApiDanhSach(pageSlug as Slug, Number(page || 1) , other as any),
         {
             revalidateFirstPage: false,
             revalidateIfStale: false,
             revalidateOnFocus: false,
         }
     )
-    
-    const categoryData = React.useMemo(() => {
-        if (!data?.length) return undefined
-        data!.at(0)!.data!.items = data!.map((d) => d.data.items).flat()
-        const setData = new Set(data!.at(0)!.data!.items)
-        data!.at(0)!.data!.items = Array.from(setData)
-        return data!.at(0)?.data
-    }, [data])
-
+    const pagiData = React.useMemo(() => data?.data?.params.pagination, [data])
     return (
-        <PageSeo {...(categoryData as React.ComponentProps<typeof PageSeo>)}>
-            {/* <Filter /> */}
-            <MovieGrid items={categoryData?.items || []} />
+        <PageSeo {...(data?.data as React.ComponentProps<typeof PageSeo>)}>
+            <Filter breadCrumb={data?.data.breadCrumb}/>
+            <MovieGrid items={data?.data?.items || []} />
             {isLoading && <Loading />}
-            <InfinityScroll
-                onLoadMore={() => {
-                    if (!data?.length || data?.at(-1)?.data?.items.length === 0) return
-                    setSize((prev) => prev + 1)
-                }}
-            />
-            <HomeScroll />
+            {pagiData && <Pagi pagiData={pagiData}/>}
+            <HomeScroll/>
         </PageSeo>
     )
 }

@@ -6,9 +6,10 @@ import MovieBackGround from './MovieBackGround'
 
 interface MovieInfoProps {
     itemData: MoviesSlugResponseBody['data']['item']
-    isWatch: boolean
+    isWatch: boolean;
+    ep: number;
 }
-const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
+const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch, ep }) => {
     const [showInfo, setShowInfo] = React.useState(false)
 
     const watchLink = React.useMemo(() => {
@@ -24,7 +25,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
         <>
             <div className="md:pt-20 relative overflow-hidden">
                 <MovieBackGround isWatch={isWatch} posterUrl={buildImageUrl(item?.poster_url)} videoId={getYoutubeVideoId(item?.trailer_url)}/>
-                <div className="bg-cover h-full w-full mb-4 sm:absolute sm:max-w-[280px] sm:aspect-2/3 sm:right-28">
+                <div className={cn("bg-cover h-full w-full mb-4 sm:absolute sm:max-w-[280px] sm:aspect-2/3 sm:right-28", isWatch && 'hidden md:block')}>
                     <img
                         className="w-full shadow-md"
                         src={buildImageUrl(item?.thumb_url || '')}
@@ -34,7 +35,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch }) => {
                 </div>
                 <div className="relative w-full md:w-5/12 bg-transparent">
                     <h1 className="font-bold text-xl md:text-3xl mb-2">
-                        {item?.name}
+                        {item?.name} {isWatch && <span className="text-base">{`(Tập ${item.episodes[0].server_data[ep]?.name})`}</span>}
                     </h1>
                     <h2 className="font-semibold text-lg md:text-2xl text-foreground/40 mb-5">
                         {item?.origin_name}

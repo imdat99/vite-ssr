@@ -76,13 +76,6 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme }) => {
                                 />
                             </SafeRender>
                         </button>
-                        <button
-                            title="Language"
-                            onClick={() => {}}
-                            className="my-auto flex app-nes"
-                        >
-                            <b className="m-auto">VI</b>
-                        </button>
                     </div>
                 </div>
             </div>

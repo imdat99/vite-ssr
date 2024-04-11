@@ -27,9 +27,7 @@ const routes: RouteObject[] = [
                     }
                     return {
                         fallback: {
-                            [infinite_unstable_serialize(() => ['/home', 0])]: [
-                                await client.v1ApiHome(undefined),
-                            ],
+                            home: await client.v1ApiHome(),
                         },
                     }
                 },

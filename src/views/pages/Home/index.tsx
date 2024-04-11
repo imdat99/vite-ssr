@@ -1,5 +1,5 @@
 import React from 'react'
-import { unstable_serialize } from 'swr'
+import useSWR, { unstable_serialize } from 'swr'
 import reactLogo from '../../../assets/react.svg'
 import Counter from './Counter'
 import { Helmet } from 'react-helmet-async'
@@ -20,42 +20,24 @@ import HomeCarousel from './HomeCarousel'
 import SafeRender from '@/views/components/SafeRender'
 import HomeScroll from '../../components/HomeScroll'
 import TopLoading from '@/views/components/TopLoading'
-import InfinityScroll from '@/views/components/InfinityScroll'
-
-const fetcher = ([key, page]: [string, number]) =>
-    (page
-        ? client.v1ApiDanhSach(Slug.PhimMoi, page + 1)
-        : client.v1ApiHome(undefined)) as Promise<HomeGetResponseBody>
 
 const index = () => {
-    const na = useNavigate()
-    const { data, size, setSize, isLoading } = useSWRInfinite(
-        (index) => ['/home', index],
-        fetcher,
-        {
-            revalidateFirstPage: false,
-        }
-    )
-    const homeData = React.useMemo(() => {
-        if (!data?.length) return undefined
-        data!.at(0)!.data!.items = data!.map((d) => d.data.items).flat()
-        // data!.at(0)!.data!.params.pagination = data!.at(-1)!.data!.params.pagination
-        return data!.at(0)?.data
-    }, [data])
+    const { data, isLoading } = useSWR('home', client.v1ApiHome, {
+        revalidateIfStale: false
+    })
     const hotCarousel = React.useMemo(
-        () => (data?.length ? data.at(0)?.data.items.slice(0, 10) : []),
+        () => (data?.data.items ? data.data.items.slice(0, 5) : []),
         [data]
     )
 
-    // console.log('homeData', homeData)
     return (
-        <PageSeo {...(homeData as React.ComponentProps<typeof PageSeo>)}>
+        <PageSeo {...(data?.data as React.ComponentProps<typeof PageSeo>)}>
             <TopLoading loading={isLoading} />
-            {homeData && (
+            {data?.data && (
                 <>
                     <HomeCarousel carouselItems={hotCarousel!} />
                     <MovieGrid
-                        {...(homeData as Omit<
+                        {...(data.data as Omit<
                             React.ComponentProps<typeof MovieGrid>,
                             'title'
                         >)}
@@ -79,9 +61,9 @@ const index = () => {
             <HomeScroll
                 info={
                     <>
-                        New: {homeData?.params?.itemsUpdateInDay}
+                        New: {data?.data.params?.itemsUpdateInDay}
                         <br />
-                        Total: {homeData?.params?.pagination.totalItems}
+                        Total: {data?.data?.params?.pagination.totalItems}
                     </>
                 }
             />

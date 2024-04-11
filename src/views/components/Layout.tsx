@@ -11,7 +11,6 @@ import { Theme } from '@/lib/Types'
 import { cn, getCookie, isClient, setCookie } from '@/lib/utils'
 import SearchInput from './Search'
 import Footer from './Footer'
-import ListenFilter from './ListenFilter'
 
 // const window = <any>(typeof global === 'undefined' ? {
 //     fetch: (url: RequestInfo, init?: RequestInit) =>

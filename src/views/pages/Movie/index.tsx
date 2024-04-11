@@ -22,10 +22,13 @@ const Movie = () => {
         revalidateOnFocus: false,
     })
     const cacheData = React.useRef<MoviesSlugResponseBody['data']>({} as any)
-    const isWatch = React.useMemo(
-        () => isEp(ep) && isEp(server) && type === 'watch',
-        [type, ep, server]
-    )
+    const isWatch = React.useMemo(() => isEp(ep) && isEp(server) && type === 'watch', [type, ep, server, data])
+    React.useEffect(() => {
+        if(server && data && data && !data?.data.item.episodes[Number(server)]?.server_data[Number(ep)]) {
+            alert("Vailon!, Xem hay là phá?")
+            na('/movie/' + slug, { replace: true })
+        }
+    },[data, ep, server])
     React.useEffect(() => {
         // console.log('isWatch', isWatch)
         if (!isWatch) {
@@ -47,10 +50,10 @@ const Movie = () => {
                     itemData={item!}
                     ep={epNumber(ep)}
                     server={epNumber(server)}
-                    className='my-5 bg-slate-400'
+                    className="my-5"
                 />
             )}
-            <MovieInfo itemData={item!} isWatch={isWatch} />
+            <MovieInfo itemData={item!} isWatch={isWatch} ep={epNumber(ep)} />
             <MovieEpisode
                 episodes={item?.episodes || []}
                 ep={epNumber(ep)}
