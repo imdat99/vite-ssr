@@ -19,8 +19,8 @@ export async function render(
 ) {
     const { query, dataRoutes } = createStaticHandler(routes, {
         future: {
-            v7_throwAbortReason: true
-        }
+            v7_throwAbortReason: true,
+        },
     })
 
     const remixRequest = createFetchRequest(req)
@@ -32,14 +32,22 @@ export async function render(
     const router = createStaticRouter(dataRoutes, context)
     const helmetContext: { helmet: HelmetServerState } = { helmet: {} as any }
 
-    const cookies: Record<string, string> = req.headers.cookie?.split('; ').reduce((acc, cur) => ({ ...acc, [cur.split('=')[0]]: cur.split('=')[1] }), {}) || {}
+    const cookies: Record<string, string> =
+        req.headers.cookie
+            ?.split('; ')
+            .reduce(
+                (acc, cur) => ({
+                    ...acc,
+                    [cur.split('=')[0]]: cur.split('=')[1],
+                }),
+                {}
+            ) || {}
 
     const { pipe } = ReactDOMServer.renderToPipeableStream(
         <Html>
             <HelmetProvider context={helmetContext}>
                 <ErrorBoundary>
                     <StaticRouterProvider
-                        
                         router={router}
                         context={context}
                         nonce="the-nonce"
@@ -52,14 +60,21 @@ export async function render(
                 res.statusCode = 200
                 res.setHeader('content-type', 'text/html')
                 // <link rel="manifest" href="/manifest.json" />
+                const ggAnalytics = `<script async src="https://www.googletagmanager.com/gtag/js?id=G-JHH53M709Q"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-JHH53M709Q');</script>`
                 const header =
                     `<!DOCTYPE html><html lang="en" class="${cookies[storageThemeKey]}"><head><meta charset="utf-8" /><link rel="icon" href="/favicon.ico" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#000000" /><meta name="application-name" content="MOVIE DAT09" /><meta name="author" content="Dat09.fun" /><link rel="apple-touch-icon" href="/favicon.ico" /><link rel="shortcut icon" href="/vite.svg" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="preload" href="${style}" as="style"/><link rel="stylesheet" href="${style}" />` +
-                     listScript.map(script => `<link rel="preload" href="${script}" as="script" />`).join('') +
-                        Object.values(helmetContext.helmet)
+                    listScript
+                        .map(
+                            (script) =>
+                                `<link rel="preload" href="${script}" as="script" />`
+                        )
+                        .join('') +
+                    Object.values(helmetContext.helmet)
                         .map((value) => value.toString())
                         .filter(Boolean)
-                        .join('') +'</head>'
-                res.write(header.replace(/\r?\n|\r/g,""))
+                        .join('') + ggAnalytics +
+                    '</head>'
+                res.write(header.replace(/\r?\n|\r/g, ''))
                 pipe(res)
             },
             bootstrapModules: listScript,
@@ -74,7 +89,7 @@ export function createFetchRequest(req: ex.Request): Request {
     const controller = new AbortController()
     req.on('close', () => {
         try {
-            console.log("close")
+            console.log('close')
             controller.abort()
         } catch (error) {
             console.error(error)
