@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,7 +21,7 @@ const SearchInput = React.forwardRef<
     return (
         <div
             className={
-                'search-input relative w-full animate-[fadeIn] ease-linear duration-200 my-4 hidden -top-24'
+                cn('search-input relative w-full animate-[fadeIn] ease-linear duration-200 my-4 hidden -top-24', className)
             }
         >
             <div className="nes-field">

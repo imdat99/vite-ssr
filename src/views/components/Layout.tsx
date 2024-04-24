@@ -55,19 +55,24 @@ const Layout = () => {
                     onToggletheme={handleToggletheme}
                     onToggleSearch={handleToggleSearch}
                     theme={theme}
+                    searchComponent={
+                        <div className="flex">
+                            <SearchInput
+                                hidden={!toggleSearch}
+                                className="max-w-[1400px] m-auto px-4 pb-4 md:px-8 md:pb-8"
+                            />
+                        </div>
+                    }
                 />
                 <div className="flex-1">
                     <div className="max-w-[1400px] mx-auto px-4 md:px-8 bg-repeat bg-contain">
-                        <SearchInput hidden={!toggleSearch} />
                         <Outlet />
                         <ScrollRestoration
                             getKey={(location, matches) => {
                                 const paths = ['/category']
                                 return paths.includes(location.pathname)
-                                    ? 
-                                      location.pathname
-                                    : 
-                                      location.key
+                                    ? location.pathname
+                                    : location.key
                             }}
                         />
                     </div>

@@ -10,8 +10,9 @@ interface Props {
     onToggletheme: () => void
     onToggleSearch: () => void
     theme: Theme
+    searchComponent?: React.ReactNode
 }
-const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme }) => {
+const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme, searchComponent }) => {
     const [isSheetOpen, setIsSheetOpen] = React.useState(false)
     const location = useLocation()
     React.useEffect(() => {
@@ -79,6 +80,7 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme }) => {
                     </div>
                 </div>
             </div>
+            {searchComponent}
         </header>
     )
 }
