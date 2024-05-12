@@ -86,6 +86,12 @@ const MovieWatch = React.forwardRef<HTMLDivElement, MovieWatchProps>(
                             )
                                 countDown()
                         })
+                        instance.on('video:error', () => {
+                            alert('Lỗi xảy ra, vui lòng thử lại')
+                        })
+                        instance.on('error', () => {
+                            alert('Lỗi xảy ra, vui lòng thử lại')
+                        })
                     }}
                     playPercent={(percent) => {
                         setShow(percent > 85)

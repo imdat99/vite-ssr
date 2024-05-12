@@ -35,7 +35,7 @@ const MovieInfo: React.FC<MovieInfoProps> = ({ itemData: item, isWatch, ep }) =>
                 </div>
                 <div className="relative w-full md:w-5/12 bg-transparent">
                     <h1 className="font-bold text-xl md:text-3xl mb-2">
-                        {item?.name} {isWatch && <span className="text-base">{`(Tập ${item.episodes[0].server_data[ep]?.name})`}</span>}
+                        {item?.name} {isWatch && <span className="text-base"><br/>{`(Tập ${item.episodes[0].server_data[ep]?.name})`}</span>}
                     </h1>
                     <h2 className="font-semibold text-lg md:text-2xl text-foreground/40 mb-5">
                         {item?.origin_name}

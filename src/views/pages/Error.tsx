@@ -1,9 +1,10 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Error = () => {
+const Error = ({ className }: React.ComponentProps<"section">) => {
     return (
-        <section className="flex items-center h-screen p-16 app-nes">
+        <section className={cn("flex items-center h-screen p-16 app-nes", className)}>
             <div className="container flex flex-col items-center ">
                 <div className="flex flex-col gap-6 p-3">
                     <div className="nes-container is-dark max-w-xl with-title">

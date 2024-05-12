@@ -17,7 +17,7 @@ const routes: RouteObject[] = [
     {
         path: '/',
         element: _c(Layout),
-        // ErrorBoundary: Error,
+        ErrorBoundary: Error,
         children: [
             {
                 index: true,
