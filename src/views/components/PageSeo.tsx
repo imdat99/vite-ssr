@@ -25,6 +25,8 @@ const PageSeo: React.FC<PageSeoProps> = ({ children, seoOnPage, item }) => {
             {seoOnPage && (
                 <Helmet prioritizeSeoTags>
                     <title>{titleHead}</title>
+                    <meta name="googlebot" content="all"/>
+                    <meta name="googlebot-news" content="all"/>
                     <meta
                         name="description"
                         content={description}
