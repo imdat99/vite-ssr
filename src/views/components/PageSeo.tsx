@@ -1,4 +1,4 @@
-import { SeoOnPage } from '@/lib/client'
+import { MoviesSlugResponseBody, SeoOnPage } from '@/lib/client'
 import { buildImageUrl } from '@/lib/utils'
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
@@ -7,8 +7,9 @@ import { useLocation } from 'react-router-dom'
 interface PageSeoProps {
     children?: React.ReactNode
     seoOnPage: SeoOnPage
+    item?: MoviesSlugResponseBody['data']['item']
 }
-const PageSeo: React.FC<PageSeoProps> = ({ children, seoOnPage }) => {
+const PageSeo: React.FC<PageSeoProps> = ({ children, seoOnPage, item }) => {
     const {
         og_type,
         titleHead,
@@ -18,23 +19,20 @@ const PageSeo: React.FC<PageSeoProps> = ({ children, seoOnPage }) => {
         og_url,
     } = seoOnPage || {}
     const location = useLocation()
+    const description = React.useMemo(() => descriptionHead || item?.content?.replace(/<[^>]*>/g, ''), [descriptionHead, item])
     return (
         <>
             {seoOnPage && (
                 <Helmet prioritizeSeoTags>
                     <title>{titleHead}</title>
-                    {descriptionHead && (
-                        <>
-                            <meta
-                                name="description"
-                                content={descriptionHead}
-                            />
-                            <meta
-                                property="og:description"
-                                content={descriptionHead}
-                            ></meta>
-                        </>
-                    )}
+                    <meta
+                        name="description"
+                        content={description}
+                    />
+                    <meta
+                        property="og:description"
+                        content={description}
+                    ></meta>
                     <meta
                         property="og:title"
                         content={['Dat09Movie', titleHead].join(' -')}
