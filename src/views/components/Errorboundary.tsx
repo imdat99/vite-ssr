@@ -14,7 +14,7 @@ export class ErrorBoundary extends React.Component<
     return { hasError: true };
   }
   componentDidMount(): void {
-    if (isClient && !import.meta.env.DEV) {
+    if (isClient && import.meta.env.PROD) {
         DevtoolsDetector.addListener((isOpen: boolean) => {
             if (isOpen) {
                 document.location.href = 'https://shopee.vn/'
