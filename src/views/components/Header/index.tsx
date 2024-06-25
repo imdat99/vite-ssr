@@ -11,8 +11,9 @@ interface Props {
     onToggleSearch: () => void
     theme: Theme
     searchComponent?: React.ReactNode
+    toggleSearch?: boolean
 }
-const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme, searchComponent }) => {
+const index: React.FC<Props> = ({ onToggletheme, toggleSearch, onToggleSearch, theme, searchComponent }) => {
     const [isSheetOpen, setIsSheetOpen] = React.useState(false)
     const location = useLocation()
     React.useEffect(() => {
@@ -23,6 +24,7 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme, searchCo
             <div className="container flex justify-between h-16 items-center">
                 <div className="md:hidden">
                     <button
+                        hidden={!toggleSearch}
                         onClick={() => {
                             setIsSheetOpen((prev) => !prev)
                         }}
@@ -63,6 +65,7 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme, searchCo
                         className="flex items-center space-x-6 text-sm font-medium style list-none"
                     />
                 </div>
+                {searchComponent}
                 <div className="flex items-center justify-end">
                     <div className="flex items-center space-x-4">
                         <button title="search" onClick={onToggleSearch}>
@@ -80,7 +83,6 @@ const index: React.FC<Props> = ({ onToggletheme, onToggleSearch, theme, searchCo
                     </div>
                 </div>
             </div>
-            {searchComponent}
         </header>
     )
 }

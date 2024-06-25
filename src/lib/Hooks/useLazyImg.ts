@@ -5,9 +5,25 @@ const CHECK_BROWSER = isClient && "IntersectionObserver" in window;
 
 function loadImg(img: HTMLElement) {
     const url = img.getAttribute("lazy-src");
+    const webpSrc = img.getAttribute("src");
+    const isAnimate = img.hasAttribute("data-animated")
     if (url) {
-      img.setAttribute("src", url);
-      img.removeAttribute("lazy-src");
+
+        if (isAnimate) {
+            img.classList.add(
+                'opacity-0',
+                'transition-opacity',
+                'duration-500',
+                'ease-in-out'
+            )
+            img.onload = () => {
+                img.classList.remove('opacity-0')
+            }
+        }
+        img.style.backgroundImage = `url(${webpSrc})`
+        img.setAttribute('src', url)
+        img.removeAttribute('lazy-src')
+        
     }
   }
   

@@ -1,14 +1,16 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Input } from './ui/input'
 
 const SearchInput = React.forwardRef<
     HTMLInputElement,
     React.HTMLAttributes<HTMLInputElement> & {
+        onToggleSearch: () => void
         dotClassName?: string
         selectedClassName?: string
     }
->(({ className, selectedClassName, dotClassName, hidden, ...props }, ref) => {
+>(({ className, selectedClassName, dotClassName, hidden, onToggleSearch, ...props }, ref) => {
     const na = useNavigate()
     // const lo = useLocation()
     const [search, setSearch] = React.useState('' as string)
@@ -16,22 +18,26 @@ const SearchInput = React.forwardRef<
     React.useEffect(() => {
         if (hidden) {
             setSearch('')
+        } else {
+            document.getElementById('name_field')?.focus()
         }
     }, [hidden])
     return (
         <div
             className={
-                cn('search-input relative w-full animate-[fadeIn] ease-linear duration-200 my-4 hidden -top-24', className)
+                cn('search-input relative w-full animate-[fadeIn] ease-linear duration-200', className)
             }
         >
-            <div className="nes-field">
-                <label htmlFor="name_field">Tìm kiếm</label>
-                <input
+                <Input
+                    placeholder="Tìm kiếm..."
                     value={search}
                     type="text"
                     id="name_field"
-                    className="nes-input text-base !border-foreground"
+                    className='border border-foreground/50'
                     onKeyDown={(e) => {
+                        if (e.key === "Escape") {
+                            onToggleSearch()
+                        }
                         if (e.key === 'Enter') {
                             na({
                                 pathname: '/tim-kiem',
@@ -41,7 +47,6 @@ const SearchInput = React.forwardRef<
                     }}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-            </div>
         </div>
     )
 })

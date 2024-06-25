@@ -60,7 +60,7 @@ const Filter: React.FC<FilterProps> = ({ breadCrumb }) => {
     const [, setSearch] = useSearchParams()
 
     return (
-        <div className="mt-10 -mb-20">
+        <div className="mt-10 -mb-10">
             <div className="flex my-5 justify-between">
                 <p className=" text-sm">
                     {breadCrumb?.map((item, index) => item.name).join(' > ')}

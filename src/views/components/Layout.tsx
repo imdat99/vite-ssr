@@ -12,11 +12,6 @@ import { cn, getCookie, isClient, setCookie } from '@/lib/utils'
 import SearchInput from './Search'
 import Footer from './Footer'
 
-// const window = <any>(typeof global === 'undefined' ? {
-//     fetch: (url: RequestInfo, init?: RequestInit) =>
-//         import('isomorphic-fetch').then((m) => m.default(url, init)),
-// } : global)
-
 const Layout = () => {
     const location = useLocation()
     const [theme, setheme] = React.useState(
@@ -54,12 +49,22 @@ const Layout = () => {
                 <Header
                     onToggletheme={handleToggletheme}
                     onToggleSearch={handleToggleSearch}
+                    toggleSearch={!toggleSearch}
                     theme={theme}
                     searchComponent={
-                        <div className="flex">
+                        <div
+                            className={cn(
+                                'flex w-0 transition-all duration-200 ease-linear ml-auto',
+                                toggleSearch && 'md:w-8/12 w-full'
+                            )}
+                        >
                             <SearchInput
+                                onToggleSearch={handleToggleSearch}
                                 hidden={!toggleSearch}
-                                className="max-w-[1400px] m-auto px-4 pb-4 md:px-8 md:pb-8"
+                                className={cn(
+                                    'max-w-[1400px] ml-auto w-full pr-4',
+                                    !toggleSearch && 'opacity-0 -z-10'
+                                )}
                             />
                         </div>
                     }

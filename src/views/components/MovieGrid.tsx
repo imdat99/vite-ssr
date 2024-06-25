@@ -1,6 +1,7 @@
 import useLazyImg from '@/lib/Hooks/useLazyImg'
 import { MovieItem } from '@/lib/client'
-import { buildImageUrl, cn } from '@/lib/utils'
+import { ImageTypes } from '@/lib/constants'
+import { buildOriginImageUrl, buildWebpImageUrl, cn } from '@/lib/utils'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -12,7 +13,7 @@ const MovieGrid: React.FC<MovieGridProps> = (props) => {
     const { title, items } = props
     const imgBlock = useLazyImg(items)
     return (
-        <section className='mt-20 !border-foreground with-title relative !py-6 !px-2'>
+        <section className='mt-10 !border-foreground with-title relative !py-6 !px-2'>
             <div className="flex justify-between mb-2 pb-3 border-border border-b">
                 {title}
             </div>
@@ -23,13 +24,13 @@ const MovieGrid: React.FC<MovieGridProps> = (props) => {
                         className="h-fit max-w-full"
                         to={'/movie/'+item.slug}
                     >
-                        <div className="relative w-auto h-auto aspect-2/3 after:content-[''] after:bg-slate-200/20 after:absolute after:animate-pulse after:h-full after:w-full after:top-0 after:left-0 after:z-0 after:rounded-md">
+                        <div className="relative w-auto h-auto aspect-2/3 after:content-[''] after:bg-slate-200/10 after:absolute after:animate-pulse after:h-full after:w-full after:top-0 after:left-0 after:z-0 after:rounded-md">
                             <img
-                                src='/1x.png'
+                                src={buildWebpImageUrl(item.slug, ImageTypes.thumb)}
                                 alt={item.name}
-                                className="rounded-md z-10 relative w-full h-full"
+                                className="rounded-md z-10 relative w-full h-full object-cover bg-cover bg-center"
                                 loading="lazy"
-                                lazy-src={buildImageUrl(item.thumb_url)}
+                                lazy-src={buildOriginImageUrl(item.thumb_url)}
                             />
                         </div>
                         <div className="mt-2">
@@ -40,6 +41,11 @@ const MovieGrid: React.FC<MovieGridProps> = (props) => {
                         </div>
                     </Link>
                 ))}
+                {items.length === 0 && (
+                    <div className="w-full text-center text-lg text-foreground">
+                        No movie found
+                    </div>
+                )}
             </div>
         </section>
     )

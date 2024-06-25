@@ -1,5 +1,5 @@
 import { MoviesSlugResponseBody } from '@/lib/client'
-import { buildImageUrl, cn, repairUrl } from '@/lib/utils'
+import { buildWebpImageUrl, cn, repairUrl } from '@/lib/utils'
 import React from 'react'
 import Player from './Player'
 import ClientRender from '@/lib/Hoc/ClientRender'
@@ -114,7 +114,7 @@ const MovieWatch = React.forwardRef<HTMLDivElement, MovieWatchProps>(
                         backdrop: true,
                         fastForward: true,
                         theme: '#E03131',
-                        poster: buildImageUrl(itemData?.poster_url),
+                        poster: buildWebpImageUrl(itemData?.poster_url),
                         controls: [
                             {
                                 name: 'button1',

@@ -1,7 +1,8 @@
+import useLazyImg from '@/lib/Hooks/useLazyImg'
 import React from 'react'
 
 interface MovieBackGroundProps {
-    posterUrl: string
+    posterUrl: [string, string]
     videoId: string
     isWatch: boolean
 }
@@ -10,6 +11,7 @@ const MovieBackGround: React.FC<MovieBackGroundProps> = ({
     videoId,
     isWatch,
 }) => {
+    const imgBlock = useLazyImg(posterUrl)
     return (
         <>
             <div className="absolute bg-cover h-full hidden md:block w-7/12 top-0 right-0">
@@ -20,11 +22,13 @@ const MovieBackGround: React.FC<MovieBackGroundProps> = ({
                         title="YouTube video player"
                     ></iframe>
                 )}
-                <div className="flex h-[115%] w-ful absolute top-3/4 -left-[20%] -translate-y-2/3" hidden={Boolean(videoId && !isWatch)}>
+                <div className="flex h-[115%] w-ful absolute top-3/4 -left-[20%] -translate-y-2/3" ref={imgBlock}>
                     <img
-                        src={posterUrl}
+                        data-animated
+                        src={posterUrl[1]}
+                        lazy-src={posterUrl[0]}
                         alt=""
-                        className="h-full aspect-video m-auto flex-shrink-0 w-full object-cover"
+                        className="h-full aspect-video m-auto flex-shrink-0 object-cover opacity-0"
                     />
                 </div>
                 <div className="absolute aspect-video md:backdrop-blur-sm h-[120%] backdrop-p z-0 top-2/3 -left-[20%] -translate-y-2/3"></div>

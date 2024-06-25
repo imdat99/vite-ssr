@@ -38,7 +38,7 @@ const HomeScroll: React.FC<HomeScrollProps> = ({info}) => {
             <button
                 type="button"
                 className={cn(
-                    'nes-btn is-warning scroll-btn !p-1 z-50',
+                    'nes-btn is-warning text-xl scroll-btn z-50 animate-bounce p-3 rounded-md',
                     navRef.current
                 )}
                 onClick={scrollToTop}

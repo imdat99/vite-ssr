@@ -3,11 +3,15 @@ import { useDotButton } from '@/views/components/ui/carouselButton'
 import React from 'react'
 import { HomeCarouselProps } from './HomeCarousel'
 import { Link } from 'react-router-dom'
-import { buildImageUrl } from '@/lib/utils'
+import { buildOriginImageUrl, buildWebpImageUrl } from '@/lib/utils'
+import { ImageTypes } from '@/lib/constants'
+import useLazyImg from '@/lib/Hooks/useLazyImg'
+import { Button } from '@/views/components/ui/button'
 
 const CarouselCard: React.FC<HomeCarouselProps> = ({ carouselItems }) => {
     const { api } = useCarousel()
     const { selectedIndex } = useDotButton(api)
+    const imgBlock = useLazyImg([selectedIndex])
     return (
         <>
             {carouselItems.map((_snap, index) => {
@@ -15,13 +19,22 @@ const CarouselCard: React.FC<HomeCarouselProps> = ({ carouselItems }) => {
                 return index === selectedIndex ? (
                     <div
                         key={index}
-                        className=" shadow-lg shadow-black nes-container z-20 dark:!border-white flex flex-col animate-[fadeIn] duration-200 ease-linear absolute max-w-[300px] sm:max-w-[700px] bottom-6 py-2 px-3 sm:py-4 sm:px-6 md:-bottom-4 right-8 bg-background gap-3"
+                        className="shadow-md border rounded-xl nes-container z-20 dark:!border-white flex flex-col animate-[fadeIn] duration-200 ease-linear absolute max-w-[300px] sm:max-w-[700px] bottom-6 py-2 px-3 sm:py-4 sm:px-6 md:-bottom-4 right-8 md:backdrop-blur-md bg-background md:bg-background/45 gap-3"
                     >
                         <h2 className="title !text-xl w-fit">Movie.info</h2>
                         <div className="flex flex-row">
-                            <div className="img-container pr-5 hidden md:block">
+                            <div
+                                className="img-container pr-5 hidden md:block"
+                                ref={imgBlock}
+                            >
                                 <img
-                                    src={buildImageUrl(infoData.thumb_url)}
+                                    src={buildWebpImageUrl(
+                                        infoData.slug,
+                                        ImageTypes.thumb
+                                    )}
+                                    lazy-src={buildOriginImageUrl(
+                                        infoData.thumb_url
+                                    )}
                                     alt={infoData.name}
                                     className="w-24 h-32 min-w-32 sm:w-32 sm:h-40 md:w-40 md:h-52 aspect-2/3 flex-shrink-0"
                                 />
@@ -31,7 +44,7 @@ const CarouselCard: React.FC<HomeCarouselProps> = ({ carouselItems }) => {
                                     {infoData.category.map((item, index) => (
                                         <span
                                             key={index}
-                                            className="text-xs text-foreground font-medium bg-secondary px-2 py-1 self-start truncate"
+                                            className="text-xs text-foreground font-medium bg-secondary/40 rounded px-2 py-1 self-start truncate"
                                         >
                                             {item.name}
                                         </span>
@@ -66,13 +79,15 @@ const CarouselCard: React.FC<HomeCarouselProps> = ({ carouselItems }) => {
                                         {infoData.episode_current}
                                     </span>
                                 </div>
-                                <Link
-                                    to={'/movie/' + infoData.slug}
-                                    className="nes-btn is-error mt-5 hidden md:flex w-fit"
-                                >
-                                    <i className="nes-icon play size-1x"></i>
-                                    <span>&nbsp;Xem phim</span>
-                                </Link>
+                                <Button asChild variant="outline">
+                                    <Link
+                                        to={'/movie/' + infoData.slug}
+                                        className="mt-5 hidden md:flex w-fit"
+                                    >
+                                        <i className="nes-icon play size-1x my-auto"></i>
+                                        <span>&nbsp;Xem phim</span>
+                                    </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>

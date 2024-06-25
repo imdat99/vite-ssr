@@ -35,10 +35,10 @@ const PageSearch = () => {
                     items={searchData?.items || []}
                     title={
                         <>
-                            <h3 className="title md:text-2xl !-mt-11 text-xl font-semibold uppercase !bg-background">
+                            <h3 className="title md:text-2xl !-mt-5 text-xl font-semibold uppercase !bg-background">
                                 Tìm kiếm: {keyword}
                             </h3>
-                            <p className="mb-11">&nbsp;</p>
+                            <p className="mb-5">&nbsp;</p>
                         </>
                     }
                 />

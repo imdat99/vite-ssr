@@ -8,7 +8,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useSWR from 'swr'
 import MovieInfo from './MovieInfo'
 import Related from './Related'
-import { isEp, epNumber } from '@/lib/utils'
+import { isEp, epNumber, cn, buildOriginImageUrl } from '@/lib/utils'
 import MovieWatch from './MovieWatch'
 import HomeScroll from '@/views/components/HomeScroll'
 import MovieEpisode from './MovieEpisode'
@@ -45,14 +45,16 @@ const Movie = () => {
     return (
         <PageSeo {...(data?.data as React.ComponentProps<typeof PageSeo>)}>
             <TopLoading loading={isLoading} />
-            {isWatch && (
-                <MovieWatch
-                    itemData={item!}
-                    ep={epNumber(ep)}
-                    server={epNumber(server)}
-                    className="my-5"
-                />
-            )}
+            <div className={cn("transition-all duration-350 linear bg-foreground/35", isWatch ? 'w-full' : 'w-0')}>
+                {isWatch && (
+                    <MovieWatch
+                        itemData={item!}
+                        ep={epNumber(ep)}
+                        server={epNumber(server)}
+                        className="my-5"
+                    />
+                )}
+            </div>
             <MovieInfo itemData={item!} isWatch={isWatch} ep={epNumber(ep)} />
             <MovieEpisode
                 episodes={item?.episodes || []}

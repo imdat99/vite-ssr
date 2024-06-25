@@ -10,7 +10,7 @@ import {
 } from '@/views/components/ui/carousel'
 import { MovieItem } from '@/lib/client'
 import { build } from 'vite'
-import { buildImageUrl } from '@/lib/utils'
+import { buildOriginImageUrl } from '@/lib/utils'
 import CarouselCard from './CarouselCard'
 
 export interface HomeCarouselProps {
@@ -24,9 +24,9 @@ const HomeCarousel: React.FC<HomeCarouselProps> = ({ carouselItems }) => {
                     <React.Fragment key={index}>
                         <CarouselItem>
                             <div
-                                className="relative aspect-video overflow-hidden md:h-[460px] bg-no-repeat bg-cover bg-slate-400 dark:bg-slate-700"
+                                className="relative aspect-video md:aspect-auto overflow-hidden md:h-[560px] bg-no-repeat bg-cover bg-slate-400 dark:bg-slate-700"
                                 style={{
-                                    backgroundImage: `url(${buildImageUrl(
+                                    backgroundImage: `url(${buildOriginImageUrl(
                                         item.thumb_url.replace(
                                             'thumb',
                                             'poster'

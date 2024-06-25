@@ -56,9 +56,9 @@ const MovieEpisode = React.forwardRef<HTMLDivElement, MovieEpisodeProps>(
                             >
                                 <p className="flex">
                                     {serverIdx === server && isWatch && (
-                                        <i className="nes-icon play animate-pulse"></i>
+                                        <i className="nes-icon play my-auto animate-pulse"></i>
                                     )}
-                                    <i className="nes-icon folder"></i>
+                                    <i className="nes-icon folder my-auto"></i>
                                     <span>
                                         &nbsp;
                                         {episode.server_name}
@@ -87,23 +87,23 @@ const MovieEpisode = React.forwardRef<HTMLDivElement, MovieEpisodeProps>(
                                         type="button"
                                         title={server.name}
                                         className={cn(
-                                            'nes-btn min-w-28 flex mx-2 my-2 is-primary',
+                                            'nes-btn min-w-28 flex mx-2 my-2 is-primary p-2',
                                             isWatch &&
                                                 index === ep &&
-                                                '!cursor-not-allowed is-error !bg-green-600/80 after:!shadow-md after:!shadow-green-100'
+                                                '!cursor-not-allowed is-error text-white  bg-gradient-to-r from-rose-500 to-violet-500 after:!shadow-md after:!shadow-green-100'
                                         )}
                                         key={index}
                                         to={buildWatchLink(index, serverIdx)}
                                         onClick={(e) => {
-                                            if (index === ep) {
+                                            if (isWatch && index === ep) {
                                                 e.preventDefault()
                                             }
                                         }}
                                     >
                                         <i
                                             className={cn(
-                                                'nes-icon file',
-                                                index === ep &&
+                                                'nes-icon file my-auto mr-1',
+                                                index === ep && isWatch &&
                                                     'play animate-pulse'
                                             )}
                                         ></i>

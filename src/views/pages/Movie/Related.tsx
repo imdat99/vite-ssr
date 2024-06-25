@@ -32,7 +32,7 @@ const Related: React.FC<RelatedProps> = ({
         isLoading ? <Loading /> : (
             <MovieGrid
                 title={
-                    <h3 className="title md:text-2xl !-mt-11 text-xl font-semibold uppercase !bg-background">
+                    <h3 className="md:text-2xl text-xl font-semibold">
                         Phim liên quan xíu
                     </h3>
                 }

@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { APP_DOMAIN_CDN_IMAGE } from "./constants"
+import { APP_DOMAIN_CDN_IMAGE, ImageTypes, imageCdn } from "./constants"
 
 export const isClient = typeof window !== "undefined"
 export const isEp = (value: string = '') => !isNaN(Number(value)) || value.toLowerCase() === 'full'
@@ -35,13 +35,22 @@ export const repairUrl = (url: string) => {
             .replace('http:/', 'http://')
             .replace('https:/', 'https://')
 }
-export const buildImageUrl = (path: string = '') => {
+export const buildWebpImageUrl = (slug: string = '', type: ImageTypes = ImageTypes.thumb) => [imageCdn,type,'.'+slug].join('/')+'.webp';
+export const buildOriginImageUrl = (path: string = '', type: ImageTypes = ImageTypes.thumb) => {
     const isInclude = path.includes('uploads/movies')
     const tempUrl = isInclude ? [APP_DOMAIN_CDN_IMAGE, path].join('/') : [APP_DOMAIN_CDN_IMAGE, 'uploads/movies', path].join('/')
     let urlSplit = [...tempUrl.split('/')]
     urlSplit[urlSplit.length - 1] = encodeURIComponent(urlSplit[urlSplit.length - 1]!)
     const nameSet = new Set(urlSplit)
     return repairUrl(Array.from(nameSet).join('/'))
+}
+export function debounce<T extends Function>(cb: T, wait = 200) {
+    let h: any = 0;
+    let callable = (...args: any) => {
+        clearTimeout(h);
+        h = setTimeout(() => cb(...args), wait);
+    };
+    return <T>(<any>callable);
 }
 // Function to set a cookie
 export function setCookie(name: string, value: string, days: number = 365) {

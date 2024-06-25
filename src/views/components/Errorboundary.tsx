@@ -1,3 +1,5 @@
+import { isClient } from "@/lib/utils";
+import DevtoolsDetector from "devtools-detector";
 import React, { ReactElement } from "react";
 
 export class ErrorBoundary extends React.Component<
@@ -11,7 +13,17 @@ export class ErrorBoundary extends React.Component<
   static getDerivedStateFromError() {
     return { hasError: true };
   }
-
+  componentDidMount(): void {
+    if (isClient && !import.meta.env.DEV) {
+        DevtoolsDetector.addListener((isOpen: boolean) => {
+            if (isOpen) {
+                document.location.href = 'https://shopee.vn/'
+                return;
+            }
+        })
+        DevtoolsDetector.launch()
+    }
+  }
   componentDidCatch(error: Error, errorInfo: any) {
     console.log(error);
     console.log(errorInfo);

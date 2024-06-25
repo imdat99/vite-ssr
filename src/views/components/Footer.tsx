@@ -5,7 +5,7 @@ const Footer = () => {
   return  <div className="w-full bg-slate-400/10 mt-8 z-40">
   <div className="max-w-[1400px] mx-auto p-4 md:px-9 text-right space-y-4">
     <span
-      className="font-black text-2xl animate-pulse duration-1000 text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-violet-500"
+      className="font-[Fernando] font-black text-2xl animate-pulse duration-1000 text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-violet-500"
     >
       XemĐi.Fun
     </span>

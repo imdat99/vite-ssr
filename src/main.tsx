@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import "nes.css/css/nes.min.css";
+// import "nes.css/css/nes.min.css";
 import "nes.icons/css/nes-icons.min.css";
 import './index.css'
 import {
@@ -15,7 +15,6 @@ import Loading from './views/components/Loading'
 const render = () => {
     const router = createBrowserRouter(routes)
     const root = document.getElementById('root') as HTMLElement
-
     ReactDOM.hydrateRoot(
         root,
         <HelmetProvider>

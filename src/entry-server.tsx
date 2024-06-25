@@ -60,9 +60,9 @@ export async function render(
                 res.statusCode = 200
                 res.setHeader('content-type', 'text/html')
                 // <link rel="manifest" href="/manifest.json" />
-                const ggAnalytics = `<script async src="https://www.googletagmanager.com/gtag/js?id=G-JHH53M709Q"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-JHH53M709Q');</script>`
+                const ggAnalytics = import.meta.env.DEV ? '' : `<script async src="https://www.googletagmanager.com/gtag/js?id=G-JHH53M709Q"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-JHH53M709Q');</script>`
                 const header =
-                    `<!DOCTYPE html><html lang="en" class="${cookies[storageThemeKey]}"><head><meta charset="utf-8" /><link rel="icon" href="/favicon.ico" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#000000" /><meta name="application-name" content="MOVIE DAT09" /><meta name="author" content="Dat09.fun" /><link rel="apple-touch-icon" href="/favicon.ico" /><link rel="shortcut icon" href="/vite.svg" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="preload" href="${style}" as="style"/><link rel="stylesheet" href="${style}" />` +
+                    `<!DOCTYPE html><html lang="en" class="${cookies[storageThemeKey]}"><head><meta charset="utf-8" /><link rel="icon" href="/favicon.ico" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="theme-color" content="#000000" /><meta name="application-name" content="MOVIE Xemdi" /><meta name="author" content="Xemdi.fun" /><link rel="apple-touch-icon" href="/favicon.ico" /><link rel="shortcut icon" href="/vite.svg" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="preload" href="${style}" as="style"/><link rel="stylesheet" href="${style}" />` +
                     listScript
                         .map(
                             (script) =>

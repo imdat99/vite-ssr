@@ -19,7 +19,7 @@ const Error = ({ className }: React.ComponentProps<"section">) => {
                                 Sorry, I couldn't find this page.
                             </p>
                             <Link to="/" className="nes-btn" replace={true}>
-                                Back to home
+                                {">>>"} Back to home
                             </Link>
                         </div>
                     </div>
